@@ -63,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawingUtils.cs" />
+    <Compile Include="FrmSequenceExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSequenceExport.Designer.cs">
+      <DependentUpon>FrmSequenceExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +86,9 @@
     <Compile Include="FrmQuiltExport.Designer.cs">
       <DependentUpon>FrmQuiltExport.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FrmSequenceExport.resx">
+      <DependentUpon>FrmSequenceExport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

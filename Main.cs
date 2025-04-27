@@ -200,5 +200,17 @@ namespace batch_image_editor
                 frmQuiltExport.ShowDialog();
             }
         }
+
+        private void asImagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OrderFilesList.Any())
+            {
+                FrmSequenceExport frmQuiltExport = new FrmSequenceExport(OrderFilesList.ToArray(),
+                    (int)nudWidth.Value,
+                    (int)nudHeight.Value,
+                    new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
+                frmQuiltExport.ShowDialog();
+            }
+        }
     }
 }

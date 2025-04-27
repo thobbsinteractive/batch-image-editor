@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace batch_image_editor
 {
@@ -177,14 +175,14 @@ namespace batch_image_editor
                     var imageTotalWidth = _imageWidth * settings.Cols;
                     var imageTotalHeight = _imageHeight * settings.Rows;
                     var totalPics = settings.Rows * settings.Cols;
-                    var messageStr = _imageWidth + " x " + _imageHeight + ": Drawing {0} of " + totalPics;
+                    var messageStr = _imageWidth + "x" + _imageHeight + ": Drawing {0} of " + totalPics;
                     UpdateStatus(string.Format(messageStr, 0));
 
                     using (Image outputImage = new Bitmap(imageTotalWidth, imageTotalHeight))
                     {
                         int i = 0;
 
-                        for (int y = settings.Rows; y > 0; y--)
+                        for (int y = settings.Rows - 1; y > -1; y--)
                         {
                             for (int x = 0; x < settings.Cols; x++)
                             {
@@ -196,7 +194,7 @@ namespace batch_image_editor
                                         var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
                                         var scaledImage = DrawingUtils.ResizeImage(croppedImage, _imageWidth, _imageHeight);
                                         croppedImage.Dispose();
-                                        DrawingUtils.DrawImage(outputImage, scaledImage, new Rectangle(x * _imageWidth, y * _imageHeight, _imageWidth, _imageHeight));
+                                        DrawingUtils.DrawImage(scaledImage, outputImage, new Rectangle(x * _imageWidth, y * _imageHeight, _imageWidth, _imageHeight));
                                         scaledImage.Dispose();
                                     }
                                 }

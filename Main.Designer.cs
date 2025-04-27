@@ -36,6 +36,8 @@
             this.asQuiltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbMainImage = new System.Windows.Forms.PictureBox();
             this.scMain = new System.Windows.Forms.SplitContainer();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.lblCountText = new System.Windows.Forms.Label();
             this.grpCrop = new System.Windows.Forms.GroupBox();
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
             this.nudCropYPos = new System.Windows.Forms.NumericUpDown();
@@ -52,8 +54,6 @@
             this.lblWidth = new System.Windows.Forms.Label();
             this.lstBox = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lblCountText = new System.Windows.Forms.Label();
-            this.lblCount = new System.Windows.Forms.Label();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -108,13 +108,14 @@
             // asImagesToolStripMenuItem
             // 
             this.asImagesToolStripMenuItem.Name = "asImagesToolStripMenuItem";
-            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.asImagesToolStripMenuItem.Text = "As Images";
+            this.asImagesToolStripMenuItem.Click += new System.EventHandler(this.asImagesToolStripMenuItem_Click);
             // 
             // asQuiltToolStripMenuItem
             // 
             this.asQuiltToolStripMenuItem.Name = "asQuiltToolStripMenuItem";
-            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.asQuiltToolStripMenuItem.Text = "As quilt";
             this.asQuiltToolStripMenuItem.Click += new System.EventHandler(this.asQuiltToolStripMenuItem_Click);
             // 
@@ -148,6 +149,24 @@
             this.scMain.Size = new System.Drawing.Size(764, 517);
             this.scMain.SplitterDistance = 250;
             this.scMain.TabIndex = 3;
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Location = new System.Drawing.Point(48, 167);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(13, 13);
+            this.lblCount.TabIndex = 4;
+            this.lblCount.Text = "0";
+            // 
+            // lblCountText
+            // 
+            this.lblCountText.AutoSize = true;
+            this.lblCountText.Location = new System.Drawing.Point(7, 167);
+            this.lblCountText.Name = "lblCountText";
+            this.lblCountText.Size = new System.Drawing.Size(35, 13);
+            this.lblCountText.TabIndex = 3;
+            this.lblCountText.Text = "Count";
             // 
             // grpCrop
             // 
@@ -352,24 +371,6 @@
             this.lstBox.Size = new System.Drawing.Size(231, 147);
             this.lstBox.TabIndex = 0;
             this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
-            // 
-            // lblCountText
-            // 
-            this.lblCountText.AutoSize = true;
-            this.lblCountText.Location = new System.Drawing.Point(7, 167);
-            this.lblCountText.Name = "lblCountText";
-            this.lblCountText.Size = new System.Drawing.Size(35, 13);
-            this.lblCountText.TabIndex = 3;
-            this.lblCountText.Text = "Count";
-            // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(48, 167);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(13, 13);
-            this.lblCount.TabIndex = 4;
-            this.lblCount.Text = "0";
             // 
             // Main
             // 
