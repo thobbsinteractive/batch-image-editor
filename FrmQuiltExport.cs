@@ -13,13 +13,13 @@ namespace batch_image_editor
     {
         private struct QuiltSettings
         {
-            public int Id;
-            public string Name;
-            public int Cols;
-            public int Rows;
-            public double AspectRatio;
-            public int Width;
-            public int Height;
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Cols { get; set; }
+            public int Rows { get; set; }
+            public double AspectRatio { get; set; }
+            public int Width { get; set; }
+            public int Height { get; set; }
         };
 
         private int _imageWidth;
@@ -190,7 +190,7 @@ namespace batch_image_editor
                                 {
                                     using (Image image = Bitmap.FromFile(_imagesPaths[i]))
                                     {
-                                        UpdateStatus(string.Format(messageStr, i));
+                                        UpdateStatus(string.Format(messageStr, i + 1));
                                         var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
                                         var scaledImage = DrawingUtils.ResizeImage(croppedImage, _imageWidth, _imageHeight);
                                         croppedImage.Dispose();
@@ -203,6 +203,7 @@ namespace batch_image_editor
                         }
 
                         outputImage.Save(filePath);
+                        UpdateStatus("Export Complete!");
                     }
                 }
                 catch (Exception ex)
@@ -220,15 +221,23 @@ namespace batch_image_editor
             var settings = GetSettings();
             var totalNumPic = settings.Rows * settings.Cols;
 
-            return totalNumPic != _imagesPaths.Length;
+            if(totalNumPic != _imagesPaths.Length)
+            {
+                return MessageBox.Show($"The number of the images for the device: {totalNumPic} does not match the number of images selected: {_imagesPaths.Length}. This can lead to gaps in the Quilt. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            }
+            return true;
         }
 
         private bool CheckRatio()
         {
             var settings = GetSettings();
-            var ratio = (double)_imageWidth / (double)_imageHeight;
+            var ratio = Math.Round((double)_imageWidth / (double)_imageHeight, 2);
 
-            return settings.AspectRatio == Math.Round(ratio, 2);
+            if (settings.AspectRatio !=ratio)
+            {
+                return MessageBox.Show($"The Aspect Ratio for the selected device: {settings.AspectRatio} does not match ratio of the images selected: {ratio}. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            }
+            return true;
         }
 
         private bool CheckSize()
@@ -237,11 +246,10 @@ namespace batch_image_editor
             var totalWidth = _imageWidth * settings.Cols;
             var totalHeight = _imageHeight * settings.Rows;
 
-            return settings.Width == totalWidth && settings.Height == totalHeight;
-        }
-
-        private bool CheckFileName()
-        {
+            if (settings.Width != totalWidth || settings.Height != totalHeight)
+            {
+                return MessageBox.Show($"The Quilt size for the selected device: {settings.Width}x{settings.Height} does not match the calculated Quilt size {totalWidth}x{totalHeight}. Do you want to continue?", "Total Size", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+             }
             return true;
         }
 
@@ -268,22 +276,19 @@ namespace batch_image_editor
         {
             EnableDisableControls(false);
 
-            if (!CheckCount() &&
-                MessageBox.Show("The number of the images does not match the rows * cols. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (!CheckCount())
             {
                 EnableDisableControls(true);
                 return;
             }
 
-            if (!CheckRatio() &&
-                MessageBox.Show("Aspect Ratio mis-match. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (!CheckRatio())
             {
                 EnableDisableControls(true);
                 return;
             }
 
-            if (!CheckSize() &&
-                MessageBox.Show("Total Size mis-match. Do you want to continue?", "Total Size", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (!CheckSize())
             {
                 EnableDisableControls(true);
                 return;

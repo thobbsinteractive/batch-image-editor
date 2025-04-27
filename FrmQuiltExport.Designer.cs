@@ -52,6 +52,7 @@
             // 
             // cboPresets
             // 
+            this.cboPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPresets.FormattingEnabled = true;
             this.cboPresets.Location = new System.Drawing.Point(113, 13);
             this.cboPresets.Name = "cboPresets";
