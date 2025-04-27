@@ -382,6 +382,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Batch Image Editor";
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();

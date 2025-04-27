@@ -172,21 +172,29 @@ namespace batch_image_editor
         private void nudXPos_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
+            nudWidth.Value = nudCropWidth.Value;
+            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void nudYPos_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
+            nudWidth.Value = nudCropWidth.Value;
+            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void nudCropWidth_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
+            nudWidth.Value = nudCropWidth.Value;
+            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void nudCropHeight_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
+            nudWidth.Value = nudCropWidth.Value;
+            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void asQuiltToolStripMenuItem_Click(object sender, EventArgs e)
