@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace batch_image_editor
 {
@@ -13,7 +16,7 @@ namespace batch_image_editor
         private struct QuiltSettings
         {
             public int Id;
-            public string Description;
+            public string Name;
             public int Cols;
             public int Rows;
             public double AspectRatio;
@@ -39,75 +42,78 @@ namespace batch_image_editor
             _imageHeight = imageHeight;
             _cropRectangle = cropRectangle;
             _imagesPaths = imagesPaths;
+
+            cboPresets.DisplayMember = "Name";
+            cboPresets.ValueMember = null;
             cboPresets.DataSource = PopulateDropDownList();
             cboPresets.SelectedIndex = 0;
         }
 
         private QuiltSettings[] PopulateDropDownList()
         {
-            return new[]
+            List<QuiltSettings> list = new List<QuiltSettings>();
+
+            list.Add(new QuiltSettings
             {
-                new QuiltSettings
-                {
-                    Id = 0,
-                    Description = "Looking Glass Go",
-                    Cols = 11,
-                    Rows = 6,
-                    AspectRatio = 0.75,
-                    Width = 4092,
-                    Height = 4092
-                },
-                new QuiltSettings
-                {
-                    Id = 1,
-                    Description = "Looking Glass Portrait",
-                    Cols = 8,
-                    Rows = 6,
-                    AspectRatio = 0.75,
-                    Width = 3360,
-                    Height = 3360
-                },
-                new QuiltSettings
-                {
-                    Id = 2,
-                    Description = "Looking Glass 16\" Light Field Display (Landscape)",
-                    Cols = 7,
-                    Rows = 7,
-                    AspectRatio = 1.777,
-                    Width = 5999,
-                    Height = 5999
-                },
-                new QuiltSettings
-                {
-                    Id = 3,
-                    Description = "Looking Glass 16\" Light Field Display (Portrait)",
-                    Cols = 11,
-                    Rows = 6,
-                    AspectRatio = 1.777,
-                    Width = 5995,
-                    Height = 6000
-                },
-                new QuiltSettings
-                {
-                    Id = 4,
-                    Description = "Looking Glass 32\" Light Field Display (Landscape)",
-                    Cols = 7,
-                    Rows = 7,
-                    AspectRatio = 1.777,
-                    Width = 8190,
-                    Height = 8190
-                },
-                new QuiltSettings
-                {
-                    Id = 5,
-                    Description = "Looking Glass 32\" Light Field Display (Portrait)",
-                    Cols = 11,
-                    Rows = 6,
-                    AspectRatio = 1.777,
-                    Width = 8184,
-                    Height = 8184
-                }
-            };
+                Id = 0,
+                Name = "Looking Glass Go",
+                Cols = 11,
+                Rows = 6,
+                AspectRatio = 0.75,
+                Width = 4092,
+                Height = 4092
+            });
+            list.Add(new QuiltSettings {
+                Id = 1,
+                Name = "Looking Glass Portrait",
+                Cols = 8,
+                Rows = 6,
+                AspectRatio = 0.75,
+                Width = 3360,
+                Height = 3360
+            });
+
+            list.Add(new QuiltSettings
+            {
+                Id = 2,
+                Name = "Looking Glass 16\" Light Field Display (Landscape)",
+                Cols = 7,
+                Rows = 7,
+                AspectRatio = 1.777,
+                Width = 5999,
+                Height = 5999
+            });
+            list.Add(new QuiltSettings
+            {
+                Id = 3,
+                Name = "Looking Glass 16\" Light Field Display (Portrait)",
+                Cols = 11,
+                Rows = 6,
+                AspectRatio = 1.777,
+                Width = 5995,
+                Height = 6000
+            });
+            list.Add(new QuiltSettings
+            {
+                Id = 4,
+                Name = "Looking Glass 32\" Light Field Display (Landscape)",
+                Cols = 7,
+                Rows = 7,
+                AspectRatio = 1.777,
+                Width = 8190,
+                Height = 8190
+            });
+            list.Add(new QuiltSettings
+            {
+                Id = 5,
+                Name = "Looking Glass 32\" Light Field Display (Portrait)",
+                Cols = 11,
+                Rows = 6,
+                AspectRatio = 1.777,
+                Width = 8184,
+                Height = 8184
+            });
+            return list.ToArray();
         }
 
         private void SetSettings(QuiltSettings settings)

@@ -15,7 +15,7 @@ namespace batch_image_editor
         {
             using (var graphics = Graphics.FromImage(destImage))
             {
-                using (Pen pen = new Pen(Color.Red, 1))
+                using (Pen pen = new Pen(Color.Red, 2))
                 {
                     graphics.DrawRectangle(pen, destRect);
                 }

@@ -149,7 +149,7 @@ namespace batch_image_editor
                 nudCropWidth.Value = _selectedImage.Width - nudCropXPos.Value;
 
             if (nudCropHeight.Value + nudCropYPos.Value > _selectedImage.Height)
-                nudCropHeight.Value = _selectedImage.Width - nudCropYPos.Value;
+                nudCropHeight.Value = _selectedImage.Height - nudCropYPos.Value;
 
             var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
 
