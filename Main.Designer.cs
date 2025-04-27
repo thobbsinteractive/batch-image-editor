@@ -31,41 +31,43 @@
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pbMainImage = new System.Windows.Forms.PictureBox();
-            this.scMain = new System.Windows.Forms.SplitContainer();
-            this.lstBox = new System.Windows.Forms.ListBox();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asQuiltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.grpScale = new System.Windows.Forms.GroupBox();
-            this.lblWidth = new System.Windows.Forms.Label();
-            this.lblHeight = new System.Windows.Forms.Label();
-            this.nudWidth = new System.Windows.Forms.NumericUpDown();
-            this.nudHeight = new System.Windows.Forms.NumericUpDown();
+            this.pbMainImage = new System.Windows.Forms.PictureBox();
+            this.scMain = new System.Windows.Forms.SplitContainer();
             this.grpCrop = new System.Windows.Forms.GroupBox();
-            this.nudCropYPos = new System.Windows.Forms.NumericUpDown();
-            this.nudCropXPos = new System.Windows.Forms.NumericUpDown();
-            this.lblPosY = new System.Windows.Forms.Label();
-            this.lblPosX = new System.Windows.Forms.Label();
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudCropYPos = new System.Windows.Forms.NumericUpDown();
             this.nudCropWidth = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.nudCropXPos = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblPosY = new System.Windows.Forms.Label();
+            this.lblPosX = new System.Windows.Forms.Label();
+            this.grpScale = new System.Windows.Forms.GroupBox();
+            this.nudHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudWidth = new System.Windows.Forms.NumericUpDown();
+            this.lblHeight = new System.Windows.Forms.Label();
+            this.lblWidth = new System.Windows.Forms.Label();
+            this.lstBox = new System.Windows.Forms.ListBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.lblCountText = new System.Windows.Forms.Label();
+            this.lblCount = new System.Windows.Forms.Label();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
             this.scMain.SuspendLayout();
-            this.grpScale.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             this.grpCrop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).BeginInit();
+            this.grpScale.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip2
@@ -90,9 +92,31 @@
             // openImagesToolStripMenuItem
             // 
             this.openImagesToolStripMenuItem.Name = "openImagesToolStripMenuItem";
-            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openImagesToolStripMenuItem.Text = "Open";
             this.openImagesToolStripMenuItem.Click += new System.EventHandler(this.openImagesToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.asImagesToolStripMenuItem,
+            this.asQuiltToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // asImagesToolStripMenuItem
+            // 
+            this.asImagesToolStripMenuItem.Name = "asImagesToolStripMenuItem";
+            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.asImagesToolStripMenuItem.Text = "As Images";
+            // 
+            // asQuiltToolStripMenuItem
+            // 
+            this.asQuiltToolStripMenuItem.Name = "asQuiltToolStripMenuItem";
+            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.asQuiltToolStripMenuItem.Text = "As quilt";
+            this.asQuiltToolStripMenuItem.Click += new System.EventHandler(this.asQuiltToolStripMenuItem_Click);
             // 
             // pbMainImage
             // 
@@ -111,6 +135,8 @@
             // 
             // scMain.Panel1
             // 
+            this.scMain.Panel1.Controls.Add(this.lblCount);
+            this.scMain.Panel1.Controls.Add(this.lblCountText);
             this.scMain.Panel1.Controls.Add(this.grpCrop);
             this.scMain.Panel1.Controls.Add(this.grpScale);
             this.scMain.Panel1.Controls.Add(this.lstBox);
@@ -122,121 +148,6 @@
             this.scMain.Size = new System.Drawing.Size(764, 517);
             this.scMain.SplitterDistance = 250;
             this.scMain.TabIndex = 3;
-            // 
-            // lstBox
-            // 
-            this.lstBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lstBox.FormattingEnabled = true;
-            this.lstBox.Location = new System.Drawing.Point(10, 10);
-            this.lstBox.Margin = new System.Windows.Forms.Padding(10);
-            this.lstBox.Name = "lstBox";
-            this.lstBox.Size = new System.Drawing.Size(231, 147);
-            this.lstBox.TabIndex = 0;
-            this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asImagesToolStripMenuItem,
-            this.asQuiltToolStripMenuItem});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // asImagesToolStripMenuItem
-            // 
-            this.asImagesToolStripMenuItem.Name = "asImagesToolStripMenuItem";
-            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.asImagesToolStripMenuItem.Text = "As Images";
-            // 
-            // asQuiltToolStripMenuItem
-            // 
-            this.asQuiltToolStripMenuItem.Name = "asQuiltToolStripMenuItem";
-            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.asQuiltToolStripMenuItem.Text = "As quilt";
-            this.asQuiltToolStripMenuItem.Click += new System.EventHandler(this.asQuiltToolStripMenuItem_Click);
-            // 
-            // grpScale
-            // 
-            this.grpScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpScale.Controls.Add(this.nudHeight);
-            this.grpScale.Controls.Add(this.nudWidth);
-            this.grpScale.Controls.Add(this.lblHeight);
-            this.grpScale.Controls.Add(this.lblWidth);
-            this.grpScale.Location = new System.Drawing.Point(10, 335);
-            this.grpScale.Name = "grpScale";
-            this.grpScale.Size = new System.Drawing.Size(231, 100);
-            this.grpScale.TabIndex = 2;
-            this.grpScale.TabStop = false;
-            this.grpScale.Text = "Scale";
-            // 
-            // lblWidth
-            // 
-            this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(13, 26);
-            this.lblWidth.Margin = new System.Windows.Forms.Padding(10);
-            this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(35, 13);
-            this.lblWidth.TabIndex = 0;
-            this.lblWidth.Text = "Width";
-            // 
-            // lblHeight
-            // 
-            this.lblHeight.AutoSize = true;
-            this.lblHeight.Location = new System.Drawing.Point(13, 59);
-            this.lblHeight.Margin = new System.Windows.Forms.Padding(10);
-            this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(38, 13);
-            this.lblHeight.TabIndex = 0;
-            this.lblHeight.Text = "Height";
-            // 
-            // nudWidth
-            // 
-            this.nudWidth.Location = new System.Drawing.Point(61, 24);
-            this.nudWidth.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.Name = "nudWidth";
-            this.nudWidth.Size = new System.Drawing.Size(120, 20);
-            this.nudWidth.TabIndex = 1;
-            this.nudWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.ValueChanged += new System.EventHandler(this.nudWidth_ValueChanged);
-            // 
-            // nudHeight
-            // 
-            this.nudHeight.Location = new System.Drawing.Point(61, 59);
-            this.nudHeight.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudHeight.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudHeight.Name = "nudHeight";
-            this.nudHeight.Size = new System.Drawing.Size(120, 20);
-            this.nudHeight.TabIndex = 2;
-            this.nudHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudHeight.ValueChanged += new System.EventHandler(this.nudHeight_ValueChanged);
             // 
             // grpCrop
             // 
@@ -250,67 +161,16 @@
             this.grpCrop.Controls.Add(this.label2);
             this.grpCrop.Controls.Add(this.lblPosY);
             this.grpCrop.Controls.Add(this.lblPosX);
-            this.grpCrop.Location = new System.Drawing.Point(10, 170);
+            this.grpCrop.Location = new System.Drawing.Point(10, 190);
             this.grpCrop.Name = "grpCrop";
             this.grpCrop.Size = new System.Drawing.Size(231, 159);
             this.grpCrop.TabIndex = 1;
             this.grpCrop.TabStop = false;
             this.grpCrop.Text = "Crop";
             // 
-            // nudCropYPos
-            // 
-            this.nudCropYPos.Location = new System.Drawing.Point(61, 57);
-            this.nudCropYPos.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nudCropYPos.Name = "nudCropYPos";
-            this.nudCropYPos.Size = new System.Drawing.Size(120, 20);
-            this.nudCropYPos.TabIndex = 2;
-            this.nudCropYPos.ValueChanged += new System.EventHandler(this.nudYPos_ValueChanged);
-            // 
-            // nudCropXPos
-            // 
-            this.nudCropXPos.Location = new System.Drawing.Point(61, 24);
-            this.nudCropXPos.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nudCropXPos.Name = "nudCropXPos";
-            this.nudCropXPos.Size = new System.Drawing.Size(120, 20);
-            this.nudCropXPos.TabIndex = 1;
-            this.nudCropXPos.ValueChanged += new System.EventHandler(this.nudXPos_ValueChanged);
-            // 
-            // lblPosY
-            // 
-            this.lblPosY.AutoSize = true;
-            this.lblPosY.Location = new System.Drawing.Point(13, 59);
-            this.lblPosY.Margin = new System.Windows.Forms.Padding(10);
-            this.lblPosY.Name = "lblPosY";
-            this.lblPosY.Size = new System.Drawing.Size(35, 13);
-            this.lblPosY.TabIndex = 0;
-            this.lblPosY.Text = "Pos Y";
-            // 
-            // lblPosX
-            // 
-            this.lblPosX.AutoSize = true;
-            this.lblPosX.Location = new System.Drawing.Point(13, 26);
-            this.lblPosX.Margin = new System.Windows.Forms.Padding(10);
-            this.lblPosX.Name = "lblPosX";
-            this.lblPosX.Size = new System.Drawing.Size(35, 13);
-            this.lblPosX.TabIndex = 0;
-            this.lblPosX.Text = "Pos X";
-            // 
             // nudCropHeight
             // 
             this.nudCropHeight.Location = new System.Drawing.Point(61, 129);
-            this.nudCropHeight.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.nudCropHeight.Minimum = new decimal(new int[] {
             1,
             0,
@@ -326,14 +186,22 @@
             0});
             this.nudCropHeight.ValueChanged += new System.EventHandler(this.nudCropHeight_ValueChanged);
             // 
-            // nudCropWidth
+            // nudCropYPos
             // 
-            this.nudCropWidth.Location = new System.Drawing.Point(61, 94);
-            this.nudCropWidth.Maximum = new decimal(new int[] {
-            1,
+            this.nudCropYPos.Location = new System.Drawing.Point(61, 57);
+            this.nudCropYPos.Maximum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
+            this.nudCropYPos.Name = "nudCropYPos";
+            this.nudCropYPos.Size = new System.Drawing.Size(120, 20);
+            this.nudCropYPos.TabIndex = 2;
+            this.nudCropYPos.ValueChanged += new System.EventHandler(this.nudYPos_ValueChanged);
+            // 
+            // nudCropWidth
+            // 
+            this.nudCropWidth.Location = new System.Drawing.Point(61, 94);
             this.nudCropWidth.Minimum = new decimal(new int[] {
             1,
             0,
@@ -359,6 +227,19 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Height";
             // 
+            // nudCropXPos
+            // 
+            this.nudCropXPos.Location = new System.Drawing.Point(61, 24);
+            this.nudCropXPos.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudCropXPos.Name = "nudCropXPos";
+            this.nudCropXPos.Size = new System.Drawing.Size(120, 20);
+            this.nudCropXPos.TabIndex = 1;
+            this.nudCropXPos.ValueChanged += new System.EventHandler(this.nudXPos_ValueChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -368,6 +249,127 @@
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Width";
+            // 
+            // lblPosY
+            // 
+            this.lblPosY.AutoSize = true;
+            this.lblPosY.Location = new System.Drawing.Point(13, 59);
+            this.lblPosY.Margin = new System.Windows.Forms.Padding(10);
+            this.lblPosY.Name = "lblPosY";
+            this.lblPosY.Size = new System.Drawing.Size(35, 13);
+            this.lblPosY.TabIndex = 0;
+            this.lblPosY.Text = "Pos Y";
+            // 
+            // lblPosX
+            // 
+            this.lblPosX.AutoSize = true;
+            this.lblPosX.Location = new System.Drawing.Point(13, 26);
+            this.lblPosX.Margin = new System.Windows.Forms.Padding(10);
+            this.lblPosX.Name = "lblPosX";
+            this.lblPosX.Size = new System.Drawing.Size(35, 13);
+            this.lblPosX.TabIndex = 0;
+            this.lblPosX.Text = "Pos X";
+            // 
+            // grpScale
+            // 
+            this.grpScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpScale.Controls.Add(this.nudHeight);
+            this.grpScale.Controls.Add(this.nudWidth);
+            this.grpScale.Controls.Add(this.lblHeight);
+            this.grpScale.Controls.Add(this.lblWidth);
+            this.grpScale.Location = new System.Drawing.Point(10, 355);
+            this.grpScale.Name = "grpScale";
+            this.grpScale.Size = new System.Drawing.Size(231, 100);
+            this.grpScale.TabIndex = 2;
+            this.grpScale.TabStop = false;
+            this.grpScale.Text = "Size to scale after Crop (px)";
+            // 
+            // nudHeight
+            // 
+            this.nudHeight.Location = new System.Drawing.Point(61, 59);
+            this.nudHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudHeight.Name = "nudHeight";
+            this.nudHeight.Size = new System.Drawing.Size(120, 20);
+            this.nudHeight.TabIndex = 2;
+            this.nudHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudHeight.ValueChanged += new System.EventHandler(this.nudHeight_ValueChanged);
+            // 
+            // nudWidth
+            // 
+            this.nudWidth.Location = new System.Drawing.Point(61, 24);
+            this.nudWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudWidth.Name = "nudWidth";
+            this.nudWidth.Size = new System.Drawing.Size(120, 20);
+            this.nudWidth.TabIndex = 1;
+            this.nudWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudWidth.ValueChanged += new System.EventHandler(this.nudWidth_ValueChanged);
+            // 
+            // lblHeight
+            // 
+            this.lblHeight.AutoSize = true;
+            this.lblHeight.Location = new System.Drawing.Point(13, 59);
+            this.lblHeight.Margin = new System.Windows.Forms.Padding(10);
+            this.lblHeight.Name = "lblHeight";
+            this.lblHeight.Size = new System.Drawing.Size(38, 13);
+            this.lblHeight.TabIndex = 0;
+            this.lblHeight.Text = "Height";
+            // 
+            // lblWidth
+            // 
+            this.lblWidth.AutoSize = true;
+            this.lblWidth.Location = new System.Drawing.Point(13, 26);
+            this.lblWidth.Margin = new System.Windows.Forms.Padding(10);
+            this.lblWidth.Name = "lblWidth";
+            this.lblWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblWidth.TabIndex = 0;
+            this.lblWidth.Text = "Width";
+            // 
+            // lstBox
+            // 
+            this.lstBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstBox.FormattingEnabled = true;
+            this.lstBox.Location = new System.Drawing.Point(10, 10);
+            this.lstBox.Margin = new System.Windows.Forms.Padding(10);
+            this.lstBox.Name = "lstBox";
+            this.lstBox.Size = new System.Drawing.Size(231, 147);
+            this.lstBox.TabIndex = 0;
+            this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
+            // 
+            // lblCountText
+            // 
+            this.lblCountText.AutoSize = true;
+            this.lblCountText.Location = new System.Drawing.Point(7, 167);
+            this.lblCountText.Name = "lblCountText";
+            this.lblCountText.Size = new System.Drawing.Size(35, 13);
+            this.lblCountText.TabIndex = 3;
+            this.lblCountText.Text = "Count";
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Location = new System.Drawing.Point(48, 167);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(13, 13);
+            this.lblCount.TabIndex = 4;
+            this.lblCount.Text = "0";
             // 
             // Main
             // 
@@ -384,19 +386,20 @@
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();
             this.scMain.Panel1.ResumeLayout(false);
+            this.scMain.Panel1.PerformLayout();
             this.scMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).EndInit();
             this.scMain.ResumeLayout(false);
-            this.grpScale.ResumeLayout(false);
-            this.grpScale.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             this.grpCrop.ResumeLayout(false);
             this.grpCrop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).EndInit();
+            this.grpScale.ResumeLayout(false);
+            this.grpScale.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,6 +431,8 @@
         private System.Windows.Forms.NumericUpDown nudCropWidth;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Label lblCountText;
     }
 }
 

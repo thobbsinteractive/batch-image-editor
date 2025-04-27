@@ -28,14 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.cboPresets = new System.Windows.Forms.ComboBox();
             this.lblPreset = new System.Windows.Forms.Label();
             this.grpSettings = new System.Windows.Forms.GroupBox();
-            this.nudWidth = new System.Windows.Forms.NumericUpDown();
+            this.txtWidth = new System.Windows.Forms.TextBox();
             this.lblHeight = new System.Windows.Forms.Label();
-            this.nupHeight = new System.Windows.Forms.NumericUpDown();
+            this.txtHeight = new System.Windows.Forms.TextBox();
             this.lblWidth = new System.Windows.Forms.Label();
             this.lblAspectRatio = new System.Windows.Forms.Label();
             this.lblAspectRatioText = new System.Windows.Forms.Label();
@@ -46,10 +44,8 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.lblfileName = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.grpSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCol)).BeginInit();
             this.SuspendLayout();
@@ -76,9 +72,9 @@
             // 
             this.grpSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpSettings.Controls.Add(this.nudWidth);
+            this.grpSettings.Controls.Add(this.txtWidth);
             this.grpSettings.Controls.Add(this.lblHeight);
-            this.grpSettings.Controls.Add(this.nupHeight);
+            this.grpSettings.Controls.Add(this.txtHeight);
             this.grpSettings.Controls.Add(this.lblWidth);
             this.grpSettings.Controls.Add(this.lblAspectRatio);
             this.grpSettings.Controls.Add(this.lblAspectRatioText);
@@ -93,27 +89,13 @@
             this.grpSettings.TabStop = false;
             this.grpSettings.Text = "Settings";
             // 
-            // nudWidth
+            // txtWidth
             // 
-            this.nudWidth.Location = new System.Drawing.Point(243, 45);
-            this.nudWidth.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudWidth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.Name = "nudWidth";
-            this.nudWidth.Size = new System.Drawing.Size(120, 20);
-            this.nudWidth.TabIndex = 9;
-            this.nudWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.txtWidth.Enabled = false;
+            this.txtWidth.Location = new System.Drawing.Point(243, 45);
+            this.txtWidth.Name = "txtWidth";
+            this.txtWidth.Size = new System.Drawing.Size(120, 20);
+            this.txtWidth.TabIndex = 9;
             // 
             // lblHeight
             // 
@@ -124,27 +106,13 @@
             this.lblHeight.TabIndex = 8;
             this.lblHeight.Text = "Height";
             // 
-            // nupHeight
+            // txtHeight
             // 
-            this.nupHeight.Location = new System.Drawing.Point(413, 45);
-            this.nupHeight.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nupHeight.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupHeight.Name = "nupHeight";
-            this.nupHeight.Size = new System.Drawing.Size(120, 20);
-            this.nupHeight.TabIndex = 7;
-            this.nupHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.txtHeight.Enabled = false;
+            this.txtHeight.Location = new System.Drawing.Point(413, 45);
+            this.txtHeight.Name = "txtHeight";
+            this.txtHeight.Size = new System.Drawing.Size(120, 20);
+            this.txtHeight.TabIndex = 7;
             // 
             // lblWidth
             // 
@@ -229,7 +197,7 @@
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Location = new System.Drawing.Point(496, 131);
+            this.btnExport.Location = new System.Drawing.Point(496, 156);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 3;
@@ -239,42 +207,49 @@
             // 
             // txtFileName
             // 
-            this.txtFileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFileName.Location = new System.Drawing.Point(113, 132);
+            this.txtFileName.Location = new System.Drawing.Point(75, 131);
             this.txtFileName.Name = "txtFileName";
             this.txtFileName.Size = new System.Drawing.Size(377, 20);
             this.txtFileName.TabIndex = 4;
             // 
             // lblfileName
             // 
-            this.lblfileName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblfileName.AutoSize = true;
-            this.lblfileName.Location = new System.Drawing.Point(53, 135);
+            this.lblfileName.Location = new System.Drawing.Point(15, 134);
             this.lblfileName.Name = "lblfileName";
             this.lblfileName.Size = new System.Drawing.Size(54, 13);
             this.lblfileName.TabIndex = 5;
             this.lblfileName.Text = "File Name";
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.Location = new System.Drawing.Point(15, 161);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblStatus.Size = new System.Drawing.Size(475, 13);
+            this.lblStatus.TabIndex = 6;
+            this.lblStatus.Text = "Click Export to Start";
+            // 
             // FrmQuiltExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 161);
+            this.ClientSize = new System.Drawing.Size(584, 186);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblfileName);
             this.Controls.Add(this.txtFileName);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.grpSettings);
             this.Controls.Add(this.lblPreset);
             this.Controls.Add(this.cboPresets);
-            this.MinimumSize = new System.Drawing.Size(600, 200);
+            this.MinimumSize = new System.Drawing.Size(600, 225);
             this.Name = "FrmQuiltExport";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Looking Glass Quilt Export";
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.grpSettings.ResumeLayout(false);
             this.grpSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCol)).EndInit();
             this.ResumeLayout(false);
@@ -283,8 +258,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ComboBox cboPresets;
         private System.Windows.Forms.Label lblPreset;
         private System.Windows.Forms.GroupBox grpSettings;
@@ -298,8 +271,9 @@
         private System.Windows.Forms.Label lblAspectRatioText;
         private System.Windows.Forms.Label lblAspectRatio;
         private System.Windows.Forms.Label lblWidth;
-        private System.Windows.Forms.NumericUpDown nupHeight;
+        private System.Windows.Forms.TextBox txtHeight;
         private System.Windows.Forms.Label lblHeight;
-        private System.Windows.Forms.NumericUpDown nudWidth;
+        private System.Windows.Forms.TextBox txtWidth;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

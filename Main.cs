@@ -12,13 +12,13 @@ namespace batch_image_editor
     {
         private List<string> _selectedFilesList = new List<string>();
         private Image _selectedImage = null;
+        private Image _renderImage = null;
 
         public List<string> OrderFilesList => _selectedFilesList.OrderBy(fileStr => Path.GetFileName(fileStr)).ToList();
 
         public Main()
         {
             InitializeComponent();
-            pbMainImage.Paint += PbMainImage_Paint;
         }
 
         private void openImagesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -27,6 +27,25 @@ namespace batch_image_editor
             if (_selectedFilesList.Any())
             {
                 lstBox.DataSource = OrderFilesList;
+
+                lblCount.Text = (OrderFilesList?.Count() ?? 0).ToString();
+
+                nudWidth.Maximum = _selectedImage.Width;
+                nudHeight.Maximum = _selectedImage.Height;
+                nudWidth.Value = _selectedImage.Width;
+                nudHeight.Value = _selectedImage.Height;
+                
+                nudCropXPos.Maximum = _selectedImage.Width;
+                nudCropYPos.Maximum = _selectedImage.Height;
+                nudCropXPos.Value = 0;
+                nudCropYPos.Value = 0;
+
+                nudCropWidth.Maximum = _selectedImage.Width;
+                nudCropHeight.Maximum = _selectedImage.Height;
+                nudCropWidth.Value = _selectedImage.Width;
+                nudCropHeight.Value = _selectedImage.Height;
+
+                RefreshCrop();
             }
         }
 
@@ -67,29 +86,59 @@ namespace batch_image_editor
         {
             if (lstBox.SelectedItem != null)
             {
+                RefreshRender();
+
                 pbMainImage.SizeMode = PictureBoxSizeMode.Zoom;
-                _selectedImage = Image.FromFile(lstBox.SelectedItem.ToString());
-                pbMainImage.Image = _selectedImage;
+                pbMainImage.Image = _renderImage;
 
                 nudWidth.Maximum = _selectedImage.Width;
                 nudHeight.Maximum = _selectedImage.Height;
-                nudWidth.Value = _selectedImage.Width;
-                nudHeight.Value = _selectedImage.Height;
+                if ((nudWidth.Value > _selectedImage.Width || nudHeight.Value > _selectedImage.Height))
+                {
+                    nudWidth.Value = _selectedImage.Width;
+                    nudHeight.Value = _selectedImage.Height;
+                }
 
-                nudCropXPos.Value = 0;
-                nudCropYPos.Value = 0;
                 nudCropXPos.Maximum = _selectedImage.Width;
                 nudCropYPos.Maximum = _selectedImage.Height;
+                if ((nudCropXPos.Value > _selectedImage.Width || nudCropXPos.Value > _selectedImage.Height))
+                {
+                    nudCropXPos.Value = 0;
+                    nudCropYPos.Value = 0;
+                }
 
                 nudCropWidth.Maximum = _selectedImage.Width;
                 nudCropHeight.Maximum = _selectedImage.Height;
-                nudCropWidth.Value = _selectedImage.Width;
-                nudCropHeight.Value = _selectedImage.Height;
+                if ((nudCropWidth.Value > _selectedImage.Width || nudCropHeight.Value > _selectedImage.Height))
+                {
+                    nudCropWidth.Value = _selectedImage.Width;
+                    nudCropHeight.Value = _selectedImage.Height;
+                }
+
+                RefreshCrop();
             }
+        }
+
+        private void RefreshRender()
+        {
+            if (_selectedImage != null)
+                _selectedImage.Dispose();
+
+            _selectedImage = Image.FromFile(lstBox.SelectedItem.ToString());
+
+            if (_renderImage != null)
+                _renderImage.Dispose();
+
+            _renderImage = new Bitmap(_selectedImage);
+
+            DrawingUtils.DrawImage(_selectedImage, _renderImage);
+            pbMainImage.Image = _renderImage;
         }
 
         private void RefreshCrop()
         {
+            RefreshRender();
+
             if (nudCropXPos.Value > _selectedImage.Width - 1)
                 nudCropXPos.Value = _selectedImage.Width - 1;
 
@@ -102,16 +151,10 @@ namespace batch_image_editor
             if (nudCropHeight.Value + nudCropYPos.Value > _selectedImage.Height)
                 nudCropHeight.Value = _selectedImage.Width - nudCropYPos.Value;
 
-            pbMainImage.Refresh();
-        }
+            var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
 
-        private void PbMainImage_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle ee = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
-            using (Pen pen = new Pen(Color.Red, 1))
-            {
-                e.Graphics.DrawRectangle(pen, ee);
-            }
+            DrawingUtils.DrawCrop(_renderImage, rect);
+            pbMainImage.Refresh();
         }
 
         private void nudWidth_ValueChanged(object sender, EventArgs e)
@@ -148,11 +191,14 @@ namespace batch_image_editor
 
         private void asQuiltToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmQuiltExport frmQuiltExport = new FrmQuiltExport(OrderFilesList.ToArray(), 
-                (int)nudWidth.Value, 
-                (int)nudHeight.Value,
-                new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
-            frmQuiltExport.ShowDialog();
+            if (OrderFilesList.Any())
+            {
+                FrmQuiltExport frmQuiltExport = new FrmQuiltExport(OrderFilesList.ToArray(),
+                    (int)nudWidth.Value,
+                    (int)nudHeight.Value,
+                    new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
+                frmQuiltExport.ShowDialog();
+            }
         }
     }
 }

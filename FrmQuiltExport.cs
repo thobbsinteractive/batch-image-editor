@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace batch_image_editor
@@ -23,10 +25,16 @@ namespace batch_image_editor
         private int _imageHeight;
         private Rectangle _cropRectangle;
         private string[] _imagesPaths;
+        private string _extension = ".jpg";
 
         public FrmQuiltExport(string[] imagesPaths, int imageWidth, int imageHeight, Rectangle cropRectangle)
         {
             InitializeComponent();
+
+            if (imagesPaths == null || !imagesPaths.Any())
+                throw new ArgumentNullException(nameof(imagesPaths));
+
+            _extension = Path.GetExtension(imagesPaths[0]);
             _imageWidth = imageWidth;
             _imageHeight = imageHeight;
             _cropRectangle = cropRectangle;
@@ -107,8 +115,8 @@ namespace batch_image_editor
             nudCol.Value = settings.Cols;
             nudRow.Value = settings.Rows;
             lblAspectRatio.Text = settings.AspectRatio.ToString();
-            nudWidth.Value = settings.Width;
-            nupHeight.Value = settings.Height;
+            txtWidth.Text = settings.Width.ToString();
+            txtHeight.Text = settings.Height.ToString();
             UpdateFileName();
         }
 
@@ -119,8 +127,8 @@ namespace batch_image_editor
                 Cols = (int)nudCol.Value,
                 Rows = (int)nudRow.Value,
                 AspectRatio = string.IsNullOrWhiteSpace(lblAspectRatio.Text) ? 0 : double.Parse(lblAspectRatio.Text),
-                Width = (int)nudWidth.Value,
-                Height = (int)nupHeight.Value
+                Width = string.IsNullOrWhiteSpace(txtWidth.Text) ? 0: int.Parse(txtWidth.Text),
+                Height = string.IsNullOrWhiteSpace(txtHeight.Text) ? 0: int.Parse(txtHeight.Text)
             };
         }
 
@@ -138,26 +146,77 @@ namespace batch_image_editor
             txtFileName.Text = start + ending;
         }
 
-        private void Export()
+        private void UpdateStatus(string status)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    lblStatus.Text = status;
+                }));
+            }
+            else
+            {
+                lblStatus.Text = status;
+            }
+        }
+
+        private Task<bool> Export(string filePath)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    var settings = GetSettings();
+                    var imageTotalWidth = _imageWidth * settings.Cols;
+                    var imageTotalHeight = _imageHeight * settings.Rows;
+                    var totalPics = settings.Rows * settings.Cols;
+                    var messageStr = _imageWidth + " x " + _imageHeight + ": Drawing {0} of " + totalPics;
+                    UpdateStatus(string.Format(messageStr, 0));
+
+                    using (Image outputImage = new Bitmap(imageTotalWidth, imageTotalHeight))
+                    {
+                        int i = 0;
+
+                        for (int y = settings.Rows; y > 0; y--)
+                        {
+                            for (int x = 0; x < settings.Cols; x++)
+                            {
+                                if (i < _imagesPaths.Count())
+                                {
+                                    using (Image image = Bitmap.FromFile(_imagesPaths[i]))
+                                    {
+                                        UpdateStatus(string.Format(messageStr, i));
+                                        var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
+                                        var scaledImage = DrawingUtils.ResizeImage(croppedImage, _imageWidth, _imageHeight);
+                                        croppedImage.Dispose();
+                                        DrawingUtils.DrawImage(outputImage, scaledImage, new Rectangle(x * _imageWidth, y * _imageHeight, _imageWidth, _imageHeight));
+                                        scaledImage.Dispose();
+                                    }
+                                }
+                                i++;
+                            }
+                        }
+
+                        outputImage.Save(filePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error during export {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        private bool CheckCount()
         {
             var settings = GetSettings();
-            var imageTotalWidth = _imageWidth * settings.Cols;
-            var imageTotalHeight = _imageHeight * settings.Rows;
-            Image outputImage = new Bitmap(imageTotalWidth, imageTotalHeight);
-            int i = 0;
+            var totalNumPic = settings.Rows * settings.Cols;
 
-            for (int y = settings.Rows; y > 0; y--)
-            {
-                for (int x = 0; x < settings.Cols; x++)
-                {
-                    var image = Bitmap.FromFile(_imagesPaths[i]);
-                    var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
-                    var scaledImage = DrawingUtils.ResizeImage(croppedImage, _imageWidth, _imageHeight);
-                    DrawingUtils.DrawImage(outputImage, scaledImage, new Rectangle(x * _imageWidth, y * _imageHeight, _imageWidth, _imageHeight));
-                    i++;
-                }
-            }
-            
+            return totalNumPic != _imagesPaths.Length;
         }
 
         private bool CheckRatio()
@@ -182,6 +241,16 @@ namespace batch_image_editor
             return true;
         }
 
+        private void EnableDisableControls(bool enabled)
+        {
+            txtFileName.Enabled = enabled;
+            nudCol.Enabled = enabled;
+            nudRow.Enabled = enabled;
+            txtFileName.Enabled = enabled;
+            btnExport.Enabled = enabled;
+            cboPresets.Enabled = enabled;
+        }
+
         private void cboPresets_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             if (cboPresets.SelectedItem != null)
@@ -193,21 +262,43 @@ namespace batch_image_editor
 
         private async void btnExport_Click(object sender, System.EventArgs e)
         {
+            EnableDisableControls(false);
+
+            if (!CheckCount() &&
+                MessageBox.Show("The number of the images does not match the rows * cols. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                EnableDisableControls(true);
+                return;
+            }
+
             if (!CheckRatio() &&
                 MessageBox.Show("Aspect Ratio mis-match. Do you want to continue?", "Aspect Ratio", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
+                EnableDisableControls(true);
                 return;
             }
 
             if (!CheckSize() &&
                 MessageBox.Show("Total Size mis-match. Do you want to continue?", "Total Size", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
+                EnableDisableControls(true);
                 return;
             }
 
-            Export();
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                saveFileDialog.FileName = txtFileName.Text + _extension;
+                saveFileDialog.FilterIndex = 2;
+                saveFileDialog.RestoreDirectory = true;
 
-            //await Export();
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    await Export(saveFileDialog.FileName);
+                }
+            }
+            EnableDisableControls(true);
         }
 
         private void nudCol_ValueChanged(object sender, EventArgs e)

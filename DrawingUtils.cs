@@ -7,12 +7,55 @@ namespace batch_image_editor
     internal static class DrawingUtils
     {
         /// <summary>
-        /// Resize the image to the specified width and height.
+        /// Draws the rectangle destination image
         /// </summary>
         /// <param name="image">The image to use</param>
         /// <param name="rectangle">Destination rectangle</param>
+        public static void DrawCrop(Image destImage, Rectangle destRect)
+        {
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                using (Pen pen = new Pen(Color.Red, 1))
+                {
+                    graphics.DrawRectangle(pen, destRect);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws the source image to the specified destination image using the rectangle
+        /// </summary>
+        /// <param name="srcImage">The source Image to use</param>
+        /// <param name="destImage">The destination Image to use</param>
+        /// <param name="rectangle">Destination rectangle</param>
         public static void DrawImage(Image srcImage, Image destImage, Rectangle destRect)
         {
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(srcImage, destRect, 0, 0, destRect.Width, destRect.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws the source image to the specified destination image using the rectangle
+        /// </summary>
+        /// <param name="srcImage">The source Image to use</param>
+        /// <param name="destImage">The destination Image to use</param>
+        /// <param name="rectangle">Destination rectangle</param>
+        public static void DrawImage(Image srcImage, Image destImage)
+        {
+            var destRect = new Rectangle(0, 0, srcImage.Width, srcImage.Height);
+
             using (var graphics = Graphics.FromImage(destImage))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
