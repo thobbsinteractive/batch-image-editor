@@ -151,9 +151,12 @@ namespace batch_image_editor
             if (nudCropHeight.Value + nudCropYPos.Value > _selectedImage.Height)
                 nudCropHeight.Value = _selectedImage.Height - nudCropYPos.Value;
 
-            var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
+            var blankRect = new Rectangle(0, 0, _selectedImage.Width, _selectedImage.Height);
+            DrawingUtils.DrawRectangle(_renderImage, Color.Black, blankRect);
 
-            DrawingUtils.DrawCrop(_renderImage, rect);
+            var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
+            DrawingUtils.DrawImage(_selectedImage, _renderImage, rect);
+
             pbMainImage.Refresh();
         }
 

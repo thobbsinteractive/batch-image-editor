@@ -7,6 +7,23 @@ namespace batch_image_editor
     internal static class DrawingUtils
     {
         /// <summary>
+        /// Draws a solid rectangle
+        /// </summary>
+        /// <param name="image">The image to use</param>
+        /// <param name="color">The color to use</param>
+        /// <param name="rectangle">Destination rectangle</param>
+        public static void DrawRectangle(Image destImage, Color color, Rectangle destRect)
+        {
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                using (Brush brush = new SolidBrush(color))
+                {
+                    graphics.FillRectangle(brush, destRect);
+                }
+            }
+        }
+
+        /// <summary>
         /// Draws the rectangle destination image
         /// </summary>
         /// <param name="image">The image to use</param>
@@ -41,7 +58,7 @@ namespace batch_image_editor
                 using (var wrapMode = new ImageAttributes())
                 {
                     wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(srcImage, destRect, 0, 0, destRect.Width, destRect.Height, GraphicsUnit.Pixel, wrapMode);
+                    graphics.DrawImage(srcImage, destRect, destRect.X, destRect.Y, destRect.Width, destRect.Height, GraphicsUnit.Pixel, wrapMode);
                 }
             }
         }
@@ -51,7 +68,6 @@ namespace batch_image_editor
         /// </summary>
         /// <param name="srcImage">The source Image to use</param>
         /// <param name="destImage">The destination Image to use</param>
-        /// <param name="rectangle">Destination rectangle</param>
         public static void DrawImage(Image srcImage, Image destImage)
         {
             var destRect = new Rectangle(0, 0, srcImage.Width, srcImage.Height);
