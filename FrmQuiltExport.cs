@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,17 +10,6 @@ namespace batch_image_editor
 {
     public partial class FrmQuiltExport : Form
     {
-        private struct QuiltSettings
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int Cols { get; set; }
-            public int Rows { get; set; }
-            public double AspectRatio { get; set; }
-            public int Width { get; set; }
-            public int Height { get; set; }
-        };
-
         private int _imageWidth;
         private int _imageHeight;
         private Rectangle _cropRectangle;
@@ -43,78 +31,11 @@ namespace batch_image_editor
 
             cboPresets.DisplayMember = "Name";
             cboPresets.ValueMember = null;
-            cboPresets.DataSource = PopulateDropDownList();
+            cboPresets.DataSource = ListUtils.PopulateDropDownList();
             cboPresets.SelectedIndex = 0;
         }
 
-        private QuiltSettings[] PopulateDropDownList()
-        {
-            List<QuiltSettings> list = new List<QuiltSettings>();
-
-            list.Add(new QuiltSettings
-            {
-                Id = 0,
-                Name = "Looking Glass Go",
-                Cols = 11,
-                Rows = 6,
-                AspectRatio = 0.75,
-                Width = 4092,
-                Height = 4092
-            });
-            list.Add(new QuiltSettings {
-                Id = 1,
-                Name = "Looking Glass Portrait",
-                Cols = 8,
-                Rows = 6,
-                AspectRatio = 0.75,
-                Width = 3360,
-                Height = 3360
-            });
-
-            list.Add(new QuiltSettings
-            {
-                Id = 2,
-                Name = "Looking Glass 16\" Light Field Display (Landscape)",
-                Cols = 7,
-                Rows = 7,
-                AspectRatio = 1.777,
-                Width = 5999,
-                Height = 5999
-            });
-            list.Add(new QuiltSettings
-            {
-                Id = 3,
-                Name = "Looking Glass 16\" Light Field Display (Portrait)",
-                Cols = 11,
-                Rows = 6,
-                AspectRatio = 1.777,
-                Width = 5995,
-                Height = 6000
-            });
-            list.Add(new QuiltSettings
-            {
-                Id = 4,
-                Name = "Looking Glass 32\" Light Field Display (Landscape)",
-                Cols = 7,
-                Rows = 7,
-                AspectRatio = 1.777,
-                Width = 8190,
-                Height = 8190
-            });
-            list.Add(new QuiltSettings
-            {
-                Id = 5,
-                Name = "Looking Glass 32\" Light Field Display (Portrait)",
-                Cols = 11,
-                Rows = 6,
-                AspectRatio = 1.777,
-                Width = 8184,
-                Height = 8184
-            });
-            return list.ToArray();
-        }
-
-        private void SetSettings(QuiltSettings settings)
+        private void SetSettings(ListUtils.QuiltSettings settings)
         {
             nudCol.Value = settings.Cols;
             nudRow.Value = settings.Rows;
@@ -124,9 +45,9 @@ namespace batch_image_editor
             UpdateFileName();
         }
 
-        private QuiltSettings GetSettings()
+        private ListUtils.QuiltSettings GetSettings()
         {
-            return new QuiltSettings
+            return new ListUtils.QuiltSettings
             {
                 Cols = (int)nudCol.Value,
                 Rows = (int)nudRow.Value,
@@ -267,7 +188,7 @@ namespace batch_image_editor
         {
             if (cboPresets.SelectedItem != null)
             {
-                var settings = (QuiltSettings)cboPresets.SelectedItem;
+                var settings = (ListUtils.QuiltSettings)cboPresets.SelectedItem;
                 SetSettings(settings);
             }
         }

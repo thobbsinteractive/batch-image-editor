@@ -19,6 +19,11 @@ namespace batch_image_editor
         public Main()
         {
             InitializeComponent();
+
+            cboPresets.DisplayMember = "Name";
+            cboPresets.ValueMember = null;
+            cboPresets.DataSource = ListUtils.PopulateDropDownList(true);
+            cboPresets.SelectedIndex = 0;
         }
 
         private void openImagesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,16 +165,23 @@ namespace batch_image_editor
             var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
             DrawingUtils.DrawImage(_selectedImage, _renderImage, rect);
 
-            decimal ratio = CalculateRatio();
-
+            decimal ratio = CalculateRatioCrop();
             lblRatioCalc.Text = Math.Round(ratio, 2).ToString();
+
+            decimal ratioScale = CalculateRatioScale();
+            lblRatioCalcScale.Text = Math.Round(ratioScale, 2).ToString();
 
             pbMainImage.Refresh();
         }
 
-        private decimal CalculateRatio()
+        private decimal CalculateRatioCrop()
         {
             return nudCropWidth.Value / nudCropHeight.Value;
+        }
+
+        private decimal CalculateRatioScale()
+        {
+            return nudWidth.Value / nudHeight.Value;
         }
 
         private void nudWidth_ValueChanged(object sender, EventArgs e)
@@ -203,6 +215,7 @@ namespace batch_image_editor
             RefreshCrop();
             nudWidth.Value = nudCropWidth.Value;
             nudHeight.Value = nudCropHeight.Value;
+            cboPresets.SelectedIndex = 0;
         }
 
         private void nudCropHeight_ValueChanged(object sender, EventArgs e)
@@ -210,6 +223,7 @@ namespace batch_image_editor
             RefreshCrop();
             nudWidth.Value = nudCropWidth.Value;
             nudHeight.Value = nudCropHeight.Value;
+            cboPresets.SelectedIndex = 0;
         }
 
         private void asQuiltToolStripMenuItem_Click(object sender, EventArgs e)
@@ -233,6 +247,26 @@ namespace batch_image_editor
                     (int)nudHeight.Value,
                     new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
                 frmQuiltExport.ShowDialog();
+            }
+        }
+
+        private void cboPresets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboPresets.SelectedItem != null)
+            {
+                var setting = (ListUtils.QuiltSettings)cboPresets.SelectedItem;
+
+                if (setting.Id != 0)
+                {
+                    if (setting.CellWidth <= nudWidth.Maximum)
+                        nudWidth.Value = setting.CellWidth;
+
+                    if (setting.CellHeight <= nudHeight.Maximum)
+                        nudHeight.Value = setting.CellHeight;
+
+                    decimal ratioScale = CalculateRatioScale();
+                    lblRatioCalcScale.Text = Math.Round(ratioScale, 2).ToString();
+                }
             }
         }
     }

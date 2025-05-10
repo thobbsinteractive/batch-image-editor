@@ -39,6 +39,8 @@
             this.lblCount = new System.Windows.Forms.Label();
             this.lblCountText = new System.Windows.Forms.Label();
             this.grpCrop = new System.Windows.Forms.GroupBox();
+            this.lblRatioCalc = new System.Windows.Forms.Label();
+            this.lblRatioText = new System.Windows.Forms.Label();
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
             this.nudCropYPos = new System.Windows.Forms.NumericUpDown();
             this.nudCropWidth = new System.Windows.Forms.NumericUpDown();
@@ -47,15 +49,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblPosY = new System.Windows.Forms.Label();
             this.lblPosX = new System.Windows.Forms.Label();
-            this.grpScale = new System.Windows.Forms.GroupBox();
-            this.nudHeight = new System.Windows.Forms.NumericUpDown();
-            this.nudWidth = new System.Windows.Forms.NumericUpDown();
-            this.lblHeight = new System.Windows.Forms.Label();
-            this.lblWidth = new System.Windows.Forms.Label();
             this.lstBox = new System.Windows.Forms.ListBox();
+            this.grpScale = new System.Windows.Forms.GroupBox();
+            this.cboPresets = new System.Windows.Forms.ComboBox();
+            this.nudHeight = new System.Windows.Forms.NumericUpDown();
+            this.lblHeight = new System.Windows.Forms.Label();
+            this.nudWidth = new System.Windows.Forms.NumericUpDown();
+            this.lblWidth = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lblRatioText = new System.Windows.Forms.Label();
-            this.lblRatioCalc = new System.Windows.Forms.Label();
+            this.lblRatioScaleText = new System.Windows.Forms.Label();
+            this.lblRatioCalcScale = new System.Windows.Forms.Label();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -141,8 +144,8 @@
             this.scMain.Panel1.Controls.Add(this.lblCount);
             this.scMain.Panel1.Controls.Add(this.lblCountText);
             this.scMain.Panel1.Controls.Add(this.grpCrop);
-            this.scMain.Panel1.Controls.Add(this.grpScale);
             this.scMain.Panel1.Controls.Add(this.lstBox);
+            this.scMain.Panel1.Controls.Add(this.grpScale);
             this.scMain.Panel1MinSize = 300;
             // 
             // scMain.Panel2
@@ -190,6 +193,23 @@
             this.grpCrop.TabIndex = 1;
             this.grpCrop.TabStop = false;
             this.grpCrop.Text = "Crop";
+            // 
+            // lblRatioCalc
+            // 
+            this.lblRatioCalc.AutoSize = true;
+            this.lblRatioCalc.Location = new System.Drawing.Point(227, 100);
+            this.lblRatioCalc.Name = "lblRatioCalc";
+            this.lblRatioCalc.Size = new System.Drawing.Size(0, 13);
+            this.lblRatioCalc.TabIndex = 6;
+            // 
+            // lblRatioText
+            // 
+            this.lblRatioText.AutoSize = true;
+            this.lblRatioText.Location = new System.Drawing.Point(188, 100);
+            this.lblRatioText.Name = "lblRatioText";
+            this.lblRatioText.Size = new System.Drawing.Size(32, 13);
+            this.lblRatioText.TabIndex = 5;
+            this.lblRatioText.Text = "Ratio";
             // 
             // nudCropHeight
             // 
@@ -293,77 +313,6 @@
             this.lblPosX.TabIndex = 0;
             this.lblPosX.Text = "Pos X";
             // 
-            // grpScale
-            // 
-            this.grpScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpScale.Controls.Add(this.nudHeight);
-            this.grpScale.Controls.Add(this.nudWidth);
-            this.grpScale.Controls.Add(this.lblHeight);
-            this.grpScale.Controls.Add(this.lblWidth);
-            this.grpScale.Location = new System.Drawing.Point(10, 355);
-            this.grpScale.Name = "grpScale";
-            this.grpScale.Size = new System.Drawing.Size(281, 100);
-            this.grpScale.TabIndex = 2;
-            this.grpScale.TabStop = false;
-            this.grpScale.Text = "Size to scale after Crop (px)";
-            // 
-            // nudHeight
-            // 
-            this.nudHeight.Location = new System.Drawing.Point(61, 59);
-            this.nudHeight.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudHeight.Name = "nudHeight";
-            this.nudHeight.Size = new System.Drawing.Size(120, 20);
-            this.nudHeight.TabIndex = 2;
-            this.nudHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudHeight.ValueChanged += new System.EventHandler(this.nudHeight_ValueChanged);
-            // 
-            // nudWidth
-            // 
-            this.nudWidth.Location = new System.Drawing.Point(61, 24);
-            this.nudWidth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.Name = "nudWidth";
-            this.nudWidth.Size = new System.Drawing.Size(120, 20);
-            this.nudWidth.TabIndex = 1;
-            this.nudWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudWidth.ValueChanged += new System.EventHandler(this.nudWidth_ValueChanged);
-            // 
-            // lblHeight
-            // 
-            this.lblHeight.AutoSize = true;
-            this.lblHeight.Location = new System.Drawing.Point(13, 59);
-            this.lblHeight.Margin = new System.Windows.Forms.Padding(10);
-            this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(38, 13);
-            this.lblHeight.TabIndex = 0;
-            this.lblHeight.Text = "Height";
-            // 
-            // lblWidth
-            // 
-            this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(13, 26);
-            this.lblWidth.Margin = new System.Windows.Forms.Padding(10);
-            this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(35, 13);
-            this.lblWidth.TabIndex = 0;
-            this.lblWidth.Text = "Width";
-            // 
             // lstBox
             // 
             this.lstBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -376,22 +325,105 @@
             this.lstBox.TabIndex = 0;
             this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
             // 
-            // lblRatioText
+            // grpScale
             // 
-            this.lblRatioText.AutoSize = true;
-            this.lblRatioText.Location = new System.Drawing.Point(188, 100);
-            this.lblRatioText.Name = "lblRatioText";
-            this.lblRatioText.Size = new System.Drawing.Size(32, 13);
-            this.lblRatioText.TabIndex = 5;
-            this.lblRatioText.Text = "Ratio";
+            this.grpScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpScale.Controls.Add(this.lblRatioCalcScale);
+            this.grpScale.Controls.Add(this.lblRatioScaleText);
+            this.grpScale.Controls.Add(this.cboPresets);
+            this.grpScale.Controls.Add(this.nudHeight);
+            this.grpScale.Controls.Add(this.lblHeight);
+            this.grpScale.Controls.Add(this.nudWidth);
+            this.grpScale.Controls.Add(this.lblWidth);
+            this.grpScale.Location = new System.Drawing.Point(10, 355);
+            this.grpScale.Name = "grpScale";
+            this.grpScale.Size = new System.Drawing.Size(281, 119);
+            this.grpScale.TabIndex = 2;
+            this.grpScale.TabStop = false;
+            this.grpScale.Text = "Size to scale after Crop (px)";
             // 
-            // lblRatioCalc
+            // cboPresets
             // 
-            this.lblRatioCalc.AutoSize = true;
-            this.lblRatioCalc.Location = new System.Drawing.Point(227, 100);
-            this.lblRatioCalc.Name = "lblRatioCalc";
-            this.lblRatioCalc.Size = new System.Drawing.Size(0, 13);
-            this.lblRatioCalc.TabIndex = 6;
+            this.cboPresets.FormattingEnabled = true;
+            this.cboPresets.Location = new System.Drawing.Point(6, 23);
+            this.cboPresets.Name = "cboPresets";
+            this.cboPresets.Size = new System.Drawing.Size(269, 21);
+            this.cboPresets.TabIndex = 1;
+            this.cboPresets.SelectedIndexChanged += new System.EventHandler(this.cboPresets_SelectedIndexChanged);
+            // 
+            // nudHeight
+            // 
+            this.nudHeight.Location = new System.Drawing.Point(61, 85);
+            this.nudHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudHeight.Name = "nudHeight";
+            this.nudHeight.Size = new System.Drawing.Size(120, 20);
+            this.nudHeight.TabIndex = 3;
+            this.nudHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudHeight.ValueChanged += new System.EventHandler(this.nudHeight_ValueChanged);
+            // 
+            // lblHeight
+            // 
+            this.lblHeight.AutoSize = true;
+            this.lblHeight.Location = new System.Drawing.Point(13, 85);
+            this.lblHeight.Margin = new System.Windows.Forms.Padding(10);
+            this.lblHeight.Name = "lblHeight";
+            this.lblHeight.Size = new System.Drawing.Size(38, 13);
+            this.lblHeight.TabIndex = 0;
+            this.lblHeight.Text = "Height";
+            // 
+            // nudWidth
+            // 
+            this.nudWidth.Location = new System.Drawing.Point(61, 50);
+            this.nudWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudWidth.Name = "nudWidth";
+            this.nudWidth.Size = new System.Drawing.Size(120, 20);
+            this.nudWidth.TabIndex = 2;
+            this.nudWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudWidth.ValueChanged += new System.EventHandler(this.nudWidth_ValueChanged);
+            // 
+            // lblWidth
+            // 
+            this.lblWidth.AutoSize = true;
+            this.lblWidth.Location = new System.Drawing.Point(13, 52);
+            this.lblWidth.Margin = new System.Windows.Forms.Padding(10);
+            this.lblWidth.Name = "lblWidth";
+            this.lblWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblWidth.TabIndex = 0;
+            this.lblWidth.Text = "Width";
+            // 
+            // lblRatioScaleText
+            // 
+            this.lblRatioScaleText.AutoSize = true;
+            this.lblRatioScaleText.Location = new System.Drawing.Point(187, 52);
+            this.lblRatioScaleText.Name = "lblRatioScaleText";
+            this.lblRatioScaleText.Size = new System.Drawing.Size(32, 13);
+            this.lblRatioScaleText.TabIndex = 7;
+            this.lblRatioScaleText.Text = "Ratio";
+            // 
+            // lblRatioCalcScale
+            // 
+            this.lblRatioCalcScale.AutoSize = true;
+            this.lblRatioCalcScale.Location = new System.Drawing.Point(225, 52);
+            this.lblRatioCalcScale.Name = "lblRatioCalcScale";
+            this.lblRatioCalcScale.Size = new System.Drawing.Size(0, 13);
+            this.lblRatioCalcScale.TabIndex = 7;
             // 
             // Main
             // 
@@ -404,7 +436,7 @@
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Batch Image Editor";
+            this.Text = "Looking Glass - Batch Image Editor";
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();
@@ -458,6 +490,9 @@
         private System.Windows.Forms.Label lblCountText;
         private System.Windows.Forms.Label lblRatioText;
         private System.Windows.Forms.Label lblRatioCalc;
+        private System.Windows.Forms.ComboBox cboPresets;
+        private System.Windows.Forms.Label lblRatioCalcScale;
+        private System.Windows.Forms.Label lblRatioScaleText;
     }
 }
 
