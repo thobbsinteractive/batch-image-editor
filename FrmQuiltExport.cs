@@ -46,8 +46,8 @@ namespace batch_image_editor
             lblAspectRatio.Text = settings.AspectRatio.ToString();
             lblPresetWidth.Text = settings.Width.ToString();
             lblPresetHeight.Text = settings.Height.ToString();
-            lblImageCellWidth.Text = settings.CellWidth.ToString();
-            lblImageCellHeight.Text = settings.CellHeight.ToString();
+            lblPresetCellWidth.Text = settings.CellWidth.ToString();
+            lblPresetCellHeight.Text = settings.CellHeight.ToString();
             UpdateFileName();
             RefreshImageTotals();
         }

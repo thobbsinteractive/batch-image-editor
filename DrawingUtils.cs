@@ -57,7 +57,7 @@ namespace batch_image_editor
 
                 using (var wrapMode = new ImageAttributes())
                 {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    wrapMode.SetWrapMode(WrapMode.Tile);
                     graphics.DrawImage(srcImage, destRect, destRect.X, destRect.Y, destRect.Width, destRect.Height, GraphicsUnit.Pixel, wrapMode);
                 }
             }
