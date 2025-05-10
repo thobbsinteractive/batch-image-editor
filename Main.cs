@@ -137,6 +137,9 @@ namespace batch_image_editor
 
         private void RefreshCrop()
         {
+            if (_selectedImage is null)
+                return;
+
             RefreshRender();
 
             if (nudCropXPos.Value > _selectedImage.Width - 1)
@@ -157,7 +160,16 @@ namespace batch_image_editor
             var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
             DrawingUtils.DrawImage(_selectedImage, _renderImage, rect);
 
+            decimal ratio = CalculateRatio();
+
+            lblRatioCalc.Text = Math.Round(ratio, 2).ToString();
+
             pbMainImage.Refresh();
+        }
+
+        private decimal CalculateRatio()
+        {
+            return nudCropWidth.Value / nudCropHeight.Value;
         }
 
         private void nudWidth_ValueChanged(object sender, EventArgs e)

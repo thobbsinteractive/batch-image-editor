@@ -54,6 +54,8 @@
             this.lblWidth = new System.Windows.Forms.Label();
             this.lstBox = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.lblRatioText = new System.Windows.Forms.Label();
+            this.lblRatioCalc = new System.Windows.Forms.Label();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -108,14 +110,14 @@
             // asImagesToolStripMenuItem
             // 
             this.asImagesToolStripMenuItem.Name = "asImagesToolStripMenuItem";
-            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asImagesToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.asImagesToolStripMenuItem.Text = "As Images";
             this.asImagesToolStripMenuItem.Click += new System.EventHandler(this.asImagesToolStripMenuItem_Click);
             // 
             // asQuiltToolStripMenuItem
             // 
             this.asQuiltToolStripMenuItem.Name = "asQuiltToolStripMenuItem";
-            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asQuiltToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.asQuiltToolStripMenuItem.Text = "As quilt";
             this.asQuiltToolStripMenuItem.Click += new System.EventHandler(this.asQuiltToolStripMenuItem_Click);
             // 
@@ -124,7 +126,7 @@
             this.pbMainImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMainImage.Location = new System.Drawing.Point(0, 0);
             this.pbMainImage.Name = "pbMainImage";
-            this.pbMainImage.Size = new System.Drawing.Size(510, 517);
+            this.pbMainImage.Size = new System.Drawing.Size(460, 517);
             this.pbMainImage.TabIndex = 2;
             this.pbMainImage.TabStop = false;
             // 
@@ -141,13 +143,13 @@
             this.scMain.Panel1.Controls.Add(this.grpCrop);
             this.scMain.Panel1.Controls.Add(this.grpScale);
             this.scMain.Panel1.Controls.Add(this.lstBox);
-            this.scMain.Panel1MinSize = 250;
+            this.scMain.Panel1MinSize = 300;
             // 
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.pbMainImage);
             this.scMain.Size = new System.Drawing.Size(764, 517);
-            this.scMain.SplitterDistance = 250;
+            this.scMain.SplitterDistance = 300;
             this.scMain.TabIndex = 3;
             // 
             // lblCount
@@ -172,6 +174,8 @@
             // 
             this.grpCrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpCrop.Controls.Add(this.lblRatioCalc);
+            this.grpCrop.Controls.Add(this.lblRatioText);
             this.grpCrop.Controls.Add(this.nudCropHeight);
             this.grpCrop.Controls.Add(this.nudCropYPos);
             this.grpCrop.Controls.Add(this.nudCropWidth);
@@ -182,7 +186,7 @@
             this.grpCrop.Controls.Add(this.lblPosX);
             this.grpCrop.Location = new System.Drawing.Point(10, 190);
             this.grpCrop.Name = "grpCrop";
-            this.grpCrop.Size = new System.Drawing.Size(231, 159);
+            this.grpCrop.Size = new System.Drawing.Size(281, 159);
             this.grpCrop.TabIndex = 1;
             this.grpCrop.TabStop = false;
             this.grpCrop.Text = "Crop";
@@ -299,7 +303,7 @@
             this.grpScale.Controls.Add(this.lblWidth);
             this.grpScale.Location = new System.Drawing.Point(10, 355);
             this.grpScale.Name = "grpScale";
-            this.grpScale.Size = new System.Drawing.Size(231, 100);
+            this.grpScale.Size = new System.Drawing.Size(281, 100);
             this.grpScale.TabIndex = 2;
             this.grpScale.TabStop = false;
             this.grpScale.Text = "Size to scale after Crop (px)";
@@ -368,9 +372,26 @@
             this.lstBox.Location = new System.Drawing.Point(10, 10);
             this.lstBox.Margin = new System.Windows.Forms.Padding(10);
             this.lstBox.Name = "lstBox";
-            this.lstBox.Size = new System.Drawing.Size(231, 147);
+            this.lstBox.Size = new System.Drawing.Size(281, 147);
             this.lstBox.TabIndex = 0;
             this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
+            // 
+            // lblRatioText
+            // 
+            this.lblRatioText.AutoSize = true;
+            this.lblRatioText.Location = new System.Drawing.Point(188, 100);
+            this.lblRatioText.Name = "lblRatioText";
+            this.lblRatioText.Size = new System.Drawing.Size(32, 13);
+            this.lblRatioText.TabIndex = 5;
+            this.lblRatioText.Text = "Ratio";
+            // 
+            // lblRatioCalc
+            // 
+            this.lblRatioCalc.AutoSize = true;
+            this.lblRatioCalc.Location = new System.Drawing.Point(227, 100);
+            this.lblRatioCalc.Name = "lblRatioCalc";
+            this.lblRatioCalc.Size = new System.Drawing.Size(0, 13);
+            this.lblRatioCalc.TabIndex = 6;
             // 
             // Main
             // 
@@ -435,6 +456,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.Label lblCountText;
+        private System.Windows.Forms.Label lblRatioText;
+        private System.Windows.Forms.Label lblRatioCalc;
     }
 }
 
