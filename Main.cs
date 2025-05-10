@@ -163,7 +163,7 @@ namespace batch_image_editor
             DrawingUtils.DrawRectangle(_renderImage, Color.Black, blankRect);
 
             var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
-            DrawingUtils.DrawImage(_selectedImage, _renderImage, rect);
+            DrawingUtils.DrawImage(_selectedImage, _renderImage, rect, rect);
 
             decimal ratio = CalculateRatioCrop();
             lblRatioCalc.Text = Math.Round(ratio, 2).ToString();

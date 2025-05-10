@@ -45,7 +45,7 @@ namespace batch_image_editor
         /// <param name="srcImage">The source Image to use</param>
         /// <param name="destImage">The destination Image to use</param>
         /// <param name="rectangle">Destination rectangle</param>
-        public static void DrawImage(Image srcImage, Image destImage, Rectangle destRect)
+        public static void DrawImage(Image srcImage, Image destImage, Rectangle srcRect, Rectangle destRect)
         {
             using (var graphics = Graphics.FromImage(destImage))
             {
@@ -58,7 +58,7 @@ namespace batch_image_editor
                 using (var wrapMode = new ImageAttributes())
                 {
                     wrapMode.SetWrapMode(WrapMode.Tile);
-                    graphics.DrawImage(srcImage, destRect, 0, 0, srcImage.Width, srcImage.Height, GraphicsUnit.Pixel, wrapMode);
+                    graphics.DrawImage(srcImage, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, GraphicsUnit.Pixel, wrapMode);
                 }
             }
         }

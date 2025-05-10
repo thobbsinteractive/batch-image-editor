@@ -129,7 +129,9 @@ namespace batch_image_editor
                                         var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
                                         var scaledImage = DrawingUtils.ResizeImage(croppedImage, _cellWidth, _cellHeight);
                                         croppedImage.Dispose();
-                                        DrawingUtils.DrawImage(scaledImage, outputImage, new Rectangle(x * _cellWidth, y * _cellHeight, _cellWidth, _cellHeight));
+                                        DrawingUtils.DrawImage(scaledImage, outputImage, 
+                                            new Rectangle(0, 0, scaledImage.Width, scaledImage.Height),
+                                            new Rectangle(x * _cellWidth, y * _cellHeight, _cellWidth, _cellHeight));
                                         scaledImage.Dispose();
                                     }
                                 }
