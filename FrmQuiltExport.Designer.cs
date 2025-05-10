@@ -399,6 +399,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 450);
             this.Name = "FrmQuiltExport";
             this.Padding = new System.Windows.Forms.Padding(10);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Looking Glass Quilt Export";
             this.grpSettings.ResumeLayout(false);
             this.grpSettings.PerformLayout();

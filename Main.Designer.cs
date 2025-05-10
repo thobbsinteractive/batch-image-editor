@@ -44,21 +44,21 @@
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
             this.nudCropYPos = new System.Windows.Forms.NumericUpDown();
             this.nudCropWidth = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCropHright = new System.Windows.Forms.Label();
             this.nudCropXPos = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblCropWidth = new System.Windows.Forms.Label();
             this.lblPosY = new System.Windows.Forms.Label();
             this.lblPosX = new System.Windows.Forms.Label();
             this.lstBox = new System.Windows.Forms.ListBox();
             this.grpScale = new System.Windows.Forms.GroupBox();
+            this.lblRatioCalcScale = new System.Windows.Forms.Label();
+            this.lblRatioScaleText = new System.Windows.Forms.Label();
             this.cboPresets = new System.Windows.Forms.ComboBox();
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
             this.lblHeight = new System.Windows.Forms.Label();
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lblRatioScaleText = new System.Windows.Forms.Label();
-            this.lblRatioCalcScale = new System.Windows.Forms.Label();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -136,6 +136,7 @@
             // scMain
             // 
             this.scMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.scMain.Location = new System.Drawing.Point(10, 34);
             this.scMain.Name = "scMain";
             // 
@@ -182,9 +183,9 @@
             this.grpCrop.Controls.Add(this.nudCropHeight);
             this.grpCrop.Controls.Add(this.nudCropYPos);
             this.grpCrop.Controls.Add(this.nudCropWidth);
-            this.grpCrop.Controls.Add(this.label1);
+            this.grpCrop.Controls.Add(this.lblCropHright);
             this.grpCrop.Controls.Add(this.nudCropXPos);
-            this.grpCrop.Controls.Add(this.label2);
+            this.grpCrop.Controls.Add(this.lblCropWidth);
             this.grpCrop.Controls.Add(this.lblPosY);
             this.grpCrop.Controls.Add(this.lblPosX);
             this.grpCrop.Location = new System.Drawing.Point(10, 190);
@@ -260,15 +261,15 @@
             0});
             this.nudCropWidth.ValueChanged += new System.EventHandler(this.nudCropWidth_ValueChanged);
             // 
-            // label1
+            // lblCropHright
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 129);
-            this.label1.Margin = new System.Windows.Forms.Padding(10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Height";
+            this.lblCropHright.AutoSize = true;
+            this.lblCropHright.Location = new System.Drawing.Point(13, 129);
+            this.lblCropHright.Margin = new System.Windows.Forms.Padding(10);
+            this.lblCropHright.Name = "lblCropHright";
+            this.lblCropHright.Size = new System.Drawing.Size(38, 13);
+            this.lblCropHright.TabIndex = 0;
+            this.lblCropHright.Text = "Height";
             // 
             // nudCropXPos
             // 
@@ -283,15 +284,15 @@
             this.nudCropXPos.TabIndex = 1;
             this.nudCropXPos.ValueChanged += new System.EventHandler(this.nudXPos_ValueChanged);
             // 
-            // label2
+            // lblCropWidth
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 96);
-            this.label2.Margin = new System.Windows.Forms.Padding(10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Width";
+            this.lblCropWidth.AutoSize = true;
+            this.lblCropWidth.Location = new System.Drawing.Point(13, 96);
+            this.lblCropWidth.Margin = new System.Windows.Forms.Padding(10);
+            this.lblCropWidth.Name = "lblCropWidth";
+            this.lblCropWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblCropWidth.TabIndex = 0;
+            this.lblCropWidth.Text = "Width";
             // 
             // lblPosY
             // 
@@ -342,6 +343,23 @@
             this.grpScale.TabIndex = 2;
             this.grpScale.TabStop = false;
             this.grpScale.Text = "Size to scale after Crop (px)";
+            // 
+            // lblRatioCalcScale
+            // 
+            this.lblRatioCalcScale.AutoSize = true;
+            this.lblRatioCalcScale.Location = new System.Drawing.Point(225, 52);
+            this.lblRatioCalcScale.Name = "lblRatioCalcScale";
+            this.lblRatioCalcScale.Size = new System.Drawing.Size(0, 13);
+            this.lblRatioCalcScale.TabIndex = 7;
+            // 
+            // lblRatioScaleText
+            // 
+            this.lblRatioScaleText.AutoSize = true;
+            this.lblRatioScaleText.Location = new System.Drawing.Point(187, 52);
+            this.lblRatioScaleText.Name = "lblRatioScaleText";
+            this.lblRatioScaleText.Size = new System.Drawing.Size(32, 13);
+            this.lblRatioScaleText.TabIndex = 7;
+            this.lblRatioScaleText.Text = "Ratio";
             // 
             // cboPresets
             // 
@@ -408,23 +426,6 @@
             this.lblWidth.TabIndex = 0;
             this.lblWidth.Text = "Width";
             // 
-            // lblRatioScaleText
-            // 
-            this.lblRatioScaleText.AutoSize = true;
-            this.lblRatioScaleText.Location = new System.Drawing.Point(187, 52);
-            this.lblRatioScaleText.Name = "lblRatioScaleText";
-            this.lblRatioScaleText.Size = new System.Drawing.Size(32, 13);
-            this.lblRatioScaleText.TabIndex = 7;
-            this.lblRatioScaleText.Text = "Ratio";
-            // 
-            // lblRatioCalcScale
-            // 
-            this.lblRatioCalcScale.AutoSize = true;
-            this.lblRatioCalcScale.Location = new System.Drawing.Point(225, 52);
-            this.lblRatioCalcScale.Name = "lblRatioCalcScale";
-            this.lblRatioCalcScale.Size = new System.Drawing.Size(0, 13);
-            this.lblRatioCalcScale.TabIndex = 7;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,8 +485,8 @@
         private System.Windows.Forms.Label lblPosX;
         private System.Windows.Forms.NumericUpDown nudCropHeight;
         private System.Windows.Forms.NumericUpDown nudCropWidth;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblCropHright;
+        private System.Windows.Forms.Label lblCropWidth;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.Label lblCountText;
         private System.Windows.Forms.Label lblRatioText;
