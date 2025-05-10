@@ -192,6 +192,7 @@ namespace batch_image_editor
 
         private void EnableDisableControls(bool enabled)
         {
+            this.Cursor = enabled ? Cursors.Default : Cursors.WaitCursor;
             txtFileName.Enabled = enabled;
             nudCol.Enabled = enabled;
             nudRow.Enabled = enabled;

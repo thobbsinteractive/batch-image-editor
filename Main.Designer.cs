@@ -437,7 +437,7 @@
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Looking Glass - Batch Image Editor";
+            this.Text = "Batch Image Editor";
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();

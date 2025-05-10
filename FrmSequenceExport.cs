@@ -96,6 +96,7 @@ namespace batch_image_editor
 
         private void EnableDisableControls(bool enabled)
         {
+            this.Cursor = enabled ? Cursors.Default : Cursors.WaitCursor;
             txtFileName.Enabled = enabled;
             txtFileName.Enabled = enabled;
             btnExport.Enabled = enabled;
