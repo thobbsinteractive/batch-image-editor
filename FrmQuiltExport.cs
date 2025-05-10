@@ -10,13 +10,13 @@ namespace batch_image_editor
 {
     public partial class FrmQuiltExport : Form
     {
-        private int _imageWidth;
-        private int _imageHeight;
+        private int _cellWidth;
+        private int _cellHeight;
         private Rectangle _cropRectangle;
         private string[] _imagesPaths;
         private string _extension = ".jpg";
 
-        public FrmQuiltExport(string[] imagesPaths, int imageWidth, int imageHeight, Rectangle cropRectangle)
+        public FrmQuiltExport(string[] imagesPaths, int cellWidth, int cellHeight, Rectangle cropRectangle)
         {
             InitializeComponent();
 
@@ -24,15 +24,19 @@ namespace batch_image_editor
                 throw new ArgumentNullException(nameof(imagesPaths));
 
             _extension = Path.GetExtension(imagesPaths[0]);
-            _imageWidth = imageWidth;
-            _imageHeight = imageHeight;
+            _cellWidth = cellWidth;
+            _cellHeight = cellHeight;
+
+            lblImageCellWidth.Text = _cellWidth.ToString();
+            lblImageCellHeight.Text = _cellHeight.ToString();
+
             _cropRectangle = cropRectangle;
             _imagesPaths = imagesPaths;
 
             cboPresets.DisplayMember = "Name";
             cboPresets.ValueMember = null;
             cboPresets.DataSource = ListUtils.PopulateDropDownList();
-            cboPresets.SelectedIndex = 0;
+            cboPresets.SelectedIndex = 1;
         }
 
         private void SetSettings(ListUtils.QuiltSettings settings)
@@ -40,9 +44,12 @@ namespace batch_image_editor
             nudCol.Value = settings.Cols;
             nudRow.Value = settings.Rows;
             lblAspectRatio.Text = settings.AspectRatio.ToString();
-            txtWidth.Text = settings.Width.ToString();
-            txtHeight.Text = settings.Height.ToString();
+            lblPresetWidth.Text = settings.Width.ToString();
+            lblPresetHeight.Text = settings.Height.ToString();
+            lblImageCellWidth.Text = settings.CellWidth.ToString();
+            lblImageCellHeight.Text = settings.CellHeight.ToString();
             UpdateFileName();
+            RefreshImageTotals();
         }
 
         private ListUtils.QuiltSettings GetSettings()
@@ -52,8 +59,8 @@ namespace batch_image_editor
                 Cols = (int)nudCol.Value,
                 Rows = (int)nudRow.Value,
                 AspectRatio = string.IsNullOrWhiteSpace(lblAspectRatio.Text) ? 0 : double.Parse(lblAspectRatio.Text),
-                Width = string.IsNullOrWhiteSpace(txtWidth.Text) ? 0: int.Parse(txtWidth.Text),
-                Height = string.IsNullOrWhiteSpace(txtHeight.Text) ? 0: int.Parse(txtHeight.Text)
+                Width = string.IsNullOrWhiteSpace(lblWidth.Text) ? 0: int.Parse(lblWidth.Text),
+                Height = string.IsNullOrWhiteSpace(lblHeight.Text) ? 0: int.Parse(lblHeight.Text)
             };
         }
 
@@ -86,6 +93,13 @@ namespace batch_image_editor
             }
         }
 
+        private void RefreshImageTotals()
+        {
+            var settings = GetSettings();
+            lblWidth.Text = (_cellWidth * settings.Cols).ToString();
+            lblHeight.Text = (_cellHeight * settings.Rows).ToString();
+        }
+
         private Task<bool> Export(string filePath)
         {
             return Task.Factory.StartNew(() =>
@@ -93,10 +107,10 @@ namespace batch_image_editor
                 try
                 {
                     var settings = GetSettings();
-                    var imageTotalWidth = _imageWidth * settings.Cols;
-                    var imageTotalHeight = _imageHeight * settings.Rows;
+                    var imageTotalWidth = _cellWidth * settings.Cols;
+                    var imageTotalHeight = _cellHeight * settings.Rows;
                     var totalPics = settings.Rows * settings.Cols;
-                    var messageStr = _imageWidth + "x" + _imageHeight + ": Drawing {0} of " + totalPics;
+                    var messageStr = _cellWidth + "x" + _cellHeight + ": Drawing {0} of " + totalPics;
                     UpdateStatus(string.Format(messageStr, 0));
 
                     using (Image outputImage = new Bitmap(imageTotalWidth, imageTotalHeight))
@@ -113,9 +127,9 @@ namespace batch_image_editor
                                     {
                                         UpdateStatus(string.Format(messageStr, i + 1));
                                         var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
-                                        var scaledImage = DrawingUtils.ResizeImage(croppedImage, _imageWidth, _imageHeight);
+                                        var scaledImage = DrawingUtils.ResizeImage(croppedImage, _cellWidth, _cellHeight);
                                         croppedImage.Dispose();
-                                        DrawingUtils.DrawImage(scaledImage, outputImage, new Rectangle(x * _imageWidth, y * _imageHeight, _imageWidth, _imageHeight));
+                                        DrawingUtils.DrawImage(scaledImage, outputImage, new Rectangle(x * _cellWidth, y * _cellHeight, _cellWidth, _cellHeight));
                                         scaledImage.Dispose();
                                     }
                                 }
@@ -152,7 +166,7 @@ namespace batch_image_editor
         private bool CheckRatio()
         {
             var settings = GetSettings();
-            var ratio = Math.Round((double)_imageWidth / (double)_imageHeight, 2);
+            var ratio = Math.Round((double)_cellWidth / (double)_cellHeight, 2);
 
             if (settings.AspectRatio !=ratio)
             {
@@ -164,8 +178,8 @@ namespace batch_image_editor
         private bool CheckSize()
         {
             var settings = GetSettings();
-            var totalWidth = _imageWidth * settings.Cols;
-            var totalHeight = _imageHeight * settings.Rows;
+            var totalWidth = _cellWidth * settings.Cols;
+            var totalHeight = _cellHeight * settings.Rows;
 
             if (settings.Width != totalWidth || settings.Height != totalHeight)
             {
@@ -234,11 +248,13 @@ namespace batch_image_editor
         private void nudCol_ValueChanged(object sender, EventArgs e)
         {
             UpdateFileName();
+            RefreshImageTotals();
         }
 
         private void nudRow_ValueChanged(object sender, EventArgs e)
         {
             UpdateFileName();
+            RefreshImageTotals();
         }
     }
 }
