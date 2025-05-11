@@ -6,4 +6,5 @@ Download the latest version here: https://github.com/thobbsinteractive/batch-ima
 ## Description
 Upon finding myself with a sequence of images from a Camera Rail and seemingly NO free offline batch image editors (that didn't have lots of restrictions) I hacked this app together using .Net 4.8.
 
-![Pallet](https://github.com/user-attachments/assets/b163f49b-5142-41ab-ad75-9386889a2953)
+![Pallet](https://github.com/user-attachments/assets/e54a583c-e39a-4b02-9474-60c6165f8abb)
+
