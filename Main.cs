@@ -63,7 +63,6 @@ namespace batch_image_editor
         {
             if (_selectedFilesList.Count > 0)
             {
-
                 lstBox.DataSource = OrderFilesList;
                 RefreshSelectedItem();
             }
@@ -378,17 +377,29 @@ namespace batch_image_editor
 
         private void mnuButtonMoveUp_Click(object sender, EventArgs e)
         {
-            if (lstBox.SelectedIndex != -1)
+            if (lstBox.SelectedIndex != -1 && _selectedFilesList.Count > 1)
             {
-
+                var newIdx = DrawingUtils.Clamp(lstBox.SelectedIndex - 1, 0, _selectedFilesList.Count - 1);
+                if (newIdx != lstBox.SelectedIndex)
+                {
+                    _selectedFilesList.Move(lstBox.SelectedIndex, newIdx);
+                    RefreshList();
+                    lstBox.SelectedIndex = newIdx;
+                }
             }
         }
 
         private void mnuButtonMoveDown_Click(object sender, EventArgs e)
         {
-            if (lstBox.SelectedIndex != -1)
+            if (lstBox.SelectedIndex != -1 && _selectedFilesList.Count > 1)
             {
-
+                var newIdx = DrawingUtils.Clamp(lstBox.SelectedIndex + 1, 0, _selectedFilesList.Count - 1);
+                if (newIdx != lstBox.SelectedIndex)
+                {
+                    _selectedFilesList.Move(lstBox.SelectedIndex, newIdx);
+                    RefreshList();
+                    lstBox.SelectedIndex = newIdx;
+                }
             }
         }
 
