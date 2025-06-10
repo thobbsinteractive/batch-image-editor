@@ -1,4 +1,6 @@
-﻿namespace batch_image_editor
+﻿using System.Windows.Forms;
+
+namespace batch_image_editor
 {
     partial class Main
     {
@@ -28,7 +30,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.components = new System.ComponentModel.Container();
+            this.mnuStripMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +67,11 @@
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.menuStrip2.SuspendLayout();
+            this.lstContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuButtonMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
@@ -81,18 +88,19 @@
             this.grpScale.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
+            this.lstContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip2
+            // mnuStripMain
             // 
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.exportToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(10, 10);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(764, 24);
-            this.menuStrip2.TabIndex = 1;
-            this.menuStrip2.Text = "menuStrip2";
+            this.mnuStripMain.Location = new System.Drawing.Point(10, 10);
+            this.mnuStripMain.Name = "mnuStripMain";
+            this.mnuStripMain.Size = new System.Drawing.Size(764, 24);
+            this.mnuStripMain.TabIndex = 1;
+            this.mnuStripMain.Text = "menuStrip2";
             // 
             // fileToolStripMenuItem
             // 
@@ -105,7 +113,7 @@
             // openImagesToolStripMenuItem
             // 
             this.openImagesToolStripMenuItem.Name = "openImagesToolStripMenuItem";
-            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.openImagesToolStripMenuItem.Text = "Add";
             this.openImagesToolStripMenuItem.Click += new System.EventHandler(this.openImagesToolStripMenuItem_Click);
             // 
@@ -386,6 +394,7 @@
             // 
             this.lstBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstBox.ContextMenuStrip = this.lstContextMenu;
             this.lstBox.FormattingEnabled = true;
             this.lstBox.Location = new System.Drawing.Point(10, 10);
             this.lstBox.Margin = new System.Windows.Forms.Padding(10);
@@ -494,20 +503,50 @@
             this.lblWidth.TabIndex = 0;
             this.lblWidth.Text = "Width";
             // 
+            // lstContextMenu
+            // 
+            this.lstContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuButtonMoveUp,
+            this.mnuButtonMoveDown,
+            this.mnuButtonRemove});
+            this.lstContextMenu.Name = "contextMenuStrip1";
+            this.lstContextMenu.Size = new System.Drawing.Size(139, 70);
+            // 
+            // mnuButtonMoveUp
+            // 
+            this.mnuButtonMoveUp.Name = "mnuButtonMoveUp";
+            this.mnuButtonMoveUp.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveUp.Text = "Move Up";
+            this.mnuButtonMoveUp.Click += new System.EventHandler(this.mnuButtonMoveUp_Click);
+            // 
+            // mnuButtonMoveDown
+            // 
+            this.mnuButtonMoveDown.Name = "mnuButtonMoveDown";
+            this.mnuButtonMoveDown.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveDown.Text = "Move Down";
+            this.mnuButtonMoveDown.Click += new System.EventHandler(this.mnuButtonMoveDown_Click);
+            // 
+            // mnuButtonRemove
+            // 
+            this.mnuButtonRemove.Name = "mnuButtonRemove";
+            this.mnuButtonRemove.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonRemove.Text = "Remove";
+            this.mnuButtonRemove.Click += new System.EventHandler(this.mnuButtonRemove_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 633);
             this.Controls.Add(this.scMain);
-            this.Controls.Add(this.menuStrip2);
+            this.Controls.Add(this.mnuStripMain);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Batch Image Editor";
-            this.menuStrip2.ResumeLayout(false);
-            this.menuStrip2.PerformLayout();
+            this.mnuStripMain.ResumeLayout(false);
+            this.mnuStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();
             this.scMain.Panel1.ResumeLayout(false);
             this.scMain.Panel1.PerformLayout();
@@ -528,6 +567,7 @@
             this.grpScale.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
+            this.lstContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -535,7 +575,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip2;
+        private System.Windows.Forms.MenuStrip mnuStripMain;
         private System.Windows.Forms.PictureBox pbMainImage;
         private System.Windows.Forms.SplitContainer scMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -571,6 +611,10 @@
         private System.Windows.Forms.NumericUpDown nudTranslateX;
         private System.Windows.Forms.Label lblTPosX;
         private System.Windows.Forms.Label lblTPosY;
+        private System.Windows.Forms.ContextMenuStrip lstContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveUp;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveDown;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonRemove;
     }
 }
 
