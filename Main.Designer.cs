@@ -1,4 +1,6 @@
-﻿namespace batch_image_editor
+﻿using System.Windows.Forms;
+
+namespace batch_image_editor
 {
     partial class Main
     {
@@ -28,7 +30,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.components = new System.ComponentModel.Container();
+            this.mnuStripMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +42,11 @@
             this.lblCount = new System.Windows.Forms.Label();
             this.lblCountText = new System.Windows.Forms.Label();
             this.grpCrop = new System.Windows.Forms.GroupBox();
+            this.grpTransform = new System.Windows.Forms.GroupBox();
+            this.nudTranslateY = new System.Windows.Forms.NumericUpDown();
+            this.nudTranslateX = new System.Windows.Forms.NumericUpDown();
+            this.lblTPosX = new System.Windows.Forms.Label();
+            this.lblTPosY = new System.Windows.Forms.Label();
             this.lblRatioCalc = new System.Windows.Forms.Label();
             this.lblRatioText = new System.Windows.Forms.Label();
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
@@ -59,13 +67,20 @@
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.menuStrip2.SuspendLayout();
+            this.lstContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuButtonMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
             this.scMain.SuspendLayout();
             this.grpCrop.SuspendLayout();
+            this.grpTransform.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).BeginInit();
@@ -73,18 +88,19 @@
             this.grpScale.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
+            this.lstContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip2
+            // mnuStripMain
             // 
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.exportToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(10, 10);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(764, 24);
-            this.menuStrip2.TabIndex = 1;
-            this.menuStrip2.Text = "menuStrip2";
+            this.mnuStripMain.Location = new System.Drawing.Point(10, 10);
+            this.mnuStripMain.Name = "mnuStripMain";
+            this.mnuStripMain.Size = new System.Drawing.Size(764, 24);
+            this.mnuStripMain.TabIndex = 1;
+            this.mnuStripMain.Text = "menuStrip2";
             // 
             // fileToolStripMenuItem
             // 
@@ -97,8 +113,8 @@
             // openImagesToolStripMenuItem
             // 
             this.openImagesToolStripMenuItem.Name = "openImagesToolStripMenuItem";
-            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openImagesToolStripMenuItem.Text = "Open";
+            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.openImagesToolStripMenuItem.Text = "Add";
             this.openImagesToolStripMenuItem.Click += new System.EventHandler(this.openImagesToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
@@ -129,7 +145,7 @@
             this.pbMainImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMainImage.Location = new System.Drawing.Point(0, 0);
             this.pbMainImage.Name = "pbMainImage";
-            this.pbMainImage.Size = new System.Drawing.Size(460, 517);
+            this.pbMainImage.Size = new System.Drawing.Size(460, 589);
             this.pbMainImage.TabIndex = 2;
             this.pbMainImage.TabStop = false;
             // 
@@ -152,7 +168,7 @@
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.pbMainImage);
-            this.scMain.Size = new System.Drawing.Size(764, 517);
+            this.scMain.Size = new System.Drawing.Size(764, 589);
             this.scMain.SplitterDistance = 300;
             this.scMain.TabIndex = 3;
             // 
@@ -178,6 +194,7 @@
             // 
             this.grpCrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpCrop.Controls.Add(this.grpTransform);
             this.grpCrop.Controls.Add(this.lblRatioCalc);
             this.grpCrop.Controls.Add(this.lblRatioText);
             this.grpCrop.Controls.Add(this.nudCropHeight);
@@ -190,10 +207,69 @@
             this.grpCrop.Controls.Add(this.lblPosX);
             this.grpCrop.Location = new System.Drawing.Point(10, 190);
             this.grpCrop.Name = "grpCrop";
-            this.grpCrop.Size = new System.Drawing.Size(281, 159);
+            this.grpCrop.Size = new System.Drawing.Size(281, 257);
             this.grpCrop.TabIndex = 1;
             this.grpCrop.TabStop = false;
             this.grpCrop.Text = "Crop";
+            // 
+            // grpTransform
+            // 
+            this.grpTransform.Controls.Add(this.nudTranslateY);
+            this.grpTransform.Controls.Add(this.nudTranslateX);
+            this.grpTransform.Controls.Add(this.lblTPosX);
+            this.grpTransform.Controls.Add(this.lblTPosY);
+            this.grpTransform.Location = new System.Drawing.Point(6, 168);
+            this.grpTransform.Name = "grpTransform";
+            this.grpTransform.Size = new System.Drawing.Size(269, 83);
+            this.grpTransform.TabIndex = 2;
+            this.grpTransform.TabStop = false;
+            this.grpTransform.Text = "Transform per frame (px)";
+            // 
+            // nudTranslateY
+            // 
+            this.nudTranslateY.Location = new System.Drawing.Point(61, 52);
+            this.nudTranslateY.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudTranslateY.Name = "nudTranslateY";
+            this.nudTranslateY.Size = new System.Drawing.Size(120, 20);
+            this.nudTranslateY.TabIndex = 10;
+            this.nudTranslateY.ValueChanged += new System.EventHandler(this.nudTranslateY_ValueChanged);
+            // 
+            // nudTranslateX
+            // 
+            this.nudTranslateX.Location = new System.Drawing.Point(61, 19);
+            this.nudTranslateX.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudTranslateX.Name = "nudTranslateX";
+            this.nudTranslateX.Size = new System.Drawing.Size(120, 20);
+            this.nudTranslateX.TabIndex = 9;
+            this.nudTranslateX.ValueChanged += new System.EventHandler(this.nudTranslateX_ValueChanged);
+            // 
+            // lblTPosX
+            // 
+            this.lblTPosX.AutoSize = true;
+            this.lblTPosX.Location = new System.Drawing.Point(13, 21);
+            this.lblTPosX.Margin = new System.Windows.Forms.Padding(10);
+            this.lblTPosX.Name = "lblTPosX";
+            this.lblTPosX.Size = new System.Drawing.Size(35, 13);
+            this.lblTPosX.TabIndex = 8;
+            this.lblTPosX.Text = "Pos X";
+            // 
+            // lblTPosY
+            // 
+            this.lblTPosY.AutoSize = true;
+            this.lblTPosY.Location = new System.Drawing.Point(13, 54);
+            this.lblTPosY.Margin = new System.Windows.Forms.Padding(10);
+            this.lblTPosY.Name = "lblTPosY";
+            this.lblTPosY.Size = new System.Drawing.Size(35, 13);
+            this.lblTPosY.TabIndex = 7;
+            this.lblTPosY.Text = "Pos Y";
             // 
             // lblRatioCalc
             // 
@@ -318,6 +394,7 @@
             // 
             this.lstBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstBox.ContextMenuStrip = this.lstContextMenu;
             this.lstBox.FormattingEnabled = true;
             this.lstBox.Location = new System.Drawing.Point(10, 10);
             this.lstBox.Margin = new System.Windows.Forms.Padding(10);
@@ -337,10 +414,10 @@
             this.grpScale.Controls.Add(this.lblHeight);
             this.grpScale.Controls.Add(this.nudWidth);
             this.grpScale.Controls.Add(this.lblWidth);
-            this.grpScale.Location = new System.Drawing.Point(10, 355);
+            this.grpScale.Location = new System.Drawing.Point(10, 453);
             this.grpScale.Name = "grpScale";
             this.grpScale.Size = new System.Drawing.Size(281, 119);
-            this.grpScale.TabIndex = 2;
+            this.grpScale.TabIndex = 3;
             this.grpScale.TabStop = false;
             this.grpScale.Text = "Size to scale after Crop (px)";
             // 
@@ -426,20 +503,50 @@
             this.lblWidth.TabIndex = 0;
             this.lblWidth.Text = "Width";
             // 
+            // lstContextMenu
+            // 
+            this.lstContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuButtonMoveUp,
+            this.mnuButtonMoveDown,
+            this.mnuButtonRemove});
+            this.lstContextMenu.Name = "contextMenuStrip1";
+            this.lstContextMenu.Size = new System.Drawing.Size(139, 70);
+            // 
+            // mnuButtonMoveUp
+            // 
+            this.mnuButtonMoveUp.Name = "mnuButtonMoveUp";
+            this.mnuButtonMoveUp.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveUp.Text = "Move Up";
+            this.mnuButtonMoveUp.Click += new System.EventHandler(this.mnuButtonMoveUp_Click);
+            // 
+            // mnuButtonMoveDown
+            // 
+            this.mnuButtonMoveDown.Name = "mnuButtonMoveDown";
+            this.mnuButtonMoveDown.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveDown.Text = "Move Down";
+            this.mnuButtonMoveDown.Click += new System.EventHandler(this.mnuButtonMoveDown_Click);
+            // 
+            // mnuButtonRemove
+            // 
+            this.mnuButtonRemove.Name = "mnuButtonRemove";
+            this.mnuButtonRemove.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonRemove.Text = "Remove";
+            this.mnuButtonRemove.Click += new System.EventHandler(this.mnuButtonRemove_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(784, 633);
             this.Controls.Add(this.scMain);
-            this.Controls.Add(this.menuStrip2);
+            this.Controls.Add(this.mnuStripMain);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Batch Image Editor";
-            this.menuStrip2.ResumeLayout(false);
-            this.menuStrip2.PerformLayout();
+            this.mnuStripMain.ResumeLayout(false);
+            this.mnuStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();
             this.scMain.Panel1.ResumeLayout(false);
             this.scMain.Panel1.PerformLayout();
@@ -448,6 +555,10 @@
             this.scMain.ResumeLayout(false);
             this.grpCrop.ResumeLayout(false);
             this.grpCrop.PerformLayout();
+            this.grpTransform.ResumeLayout(false);
+            this.grpTransform.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).EndInit();
@@ -456,6 +567,7 @@
             this.grpScale.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
+            this.lstContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -463,7 +575,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip2;
+        private System.Windows.Forms.MenuStrip mnuStripMain;
         private System.Windows.Forms.PictureBox pbMainImage;
         private System.Windows.Forms.SplitContainer scMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -494,6 +606,15 @@
         private System.Windows.Forms.ComboBox cboPresets;
         private System.Windows.Forms.Label lblRatioCalcScale;
         private System.Windows.Forms.Label lblRatioScaleText;
+        private System.Windows.Forms.GroupBox grpTransform;
+        private System.Windows.Forms.NumericUpDown nudTranslateY;
+        private System.Windows.Forms.NumericUpDown nudTranslateX;
+        private System.Windows.Forms.Label lblTPosX;
+        private System.Windows.Forms.Label lblTPosY;
+        private System.Windows.Forms.ContextMenuStrip lstContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveUp;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveDown;
+        private System.Windows.Forms.ToolStripMenuItem mnuButtonRemove;
     }
 }
 

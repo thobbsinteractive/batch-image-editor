@@ -85,7 +85,7 @@
             this.Name = "FrmSequenceExport";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Looking Glass Quilt Export";
+            this.Text = "Sequence Export";
             this.ResumeLayout(false);
             this.PerformLayout();
 

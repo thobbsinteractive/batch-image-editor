@@ -15,8 +15,10 @@ namespace batch_image_editor
         private Rectangle _cropRectangle;
         private string[] _imagesPaths;
         private string _extension = ".jpg";
+        private int _translateX = 0;
+        private int _translateY = 0;
 
-        public FrmQuiltExport(string[] imagesPaths, int cellWidth, int cellHeight, Rectangle cropRectangle)
+        public FrmQuiltExport(string[] imagesPaths, int cellWidth, int cellHeight, Rectangle cropRectangle, int translateX, int translateY)
         {
             InitializeComponent();
 
@@ -26,6 +28,8 @@ namespace batch_image_editor
             _extension = Path.GetExtension(imagesPaths[0]);
             _cellWidth = cellWidth;
             _cellHeight = cellHeight;
+            _translateX = translateX;
+            _translateY = translateY;
 
             lblImageCellWidth.Text = _cellWidth.ToString();
             lblImageCellHeight.Text = _cellHeight.ToString();
@@ -126,6 +130,7 @@ namespace batch_image_editor
                                     using (Image image = Bitmap.FromFile(_imagesPaths[i]))
                                     {
                                         UpdateStatus(string.Format(messageStr, i + 1));
+                                        _cropRectangle = DrawingUtils.Translate(new Rectangle(0, 0, image.Width, image.Height), _cropRectangle, _translateX, _translateY);
                                         var croppedImage = DrawingUtils.CropImage(image, _cropRectangle);
                                         var scaledImage = DrawingUtils.ResizeImage(croppedImage, _cellWidth, _cellHeight);
                                         croppedImage.Dispose();

@@ -69,6 +69,7 @@
     <Compile Include="FrmSequenceExport.Designer.cs">
       <DependentUpon>FrmSequenceExport.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="ListUtils.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

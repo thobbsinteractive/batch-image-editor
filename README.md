@@ -3,6 +3,9 @@ A .Net Windows Desktop Application for Cropping, Scaling a batch of images. Expo
 
 Download the latest version here: https://github.com/thobbsinteractive/batch-image-editor/releases/latest
 
+# Release Notes
+You can now translate the Crop per frame. This is idea if your subject is not centered in both the start and end frames!
+
 ## Description
 Upon finding myself with a sequence of images from a Camera Rail and seemingly NO free offline batch image editors (that didn't have lots of restrictions) I hacked this app together using .Net 4.8.
 
