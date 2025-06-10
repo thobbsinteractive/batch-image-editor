@@ -105,8 +105,8 @@
             // openImagesToolStripMenuItem
             // 
             this.openImagesToolStripMenuItem.Name = "openImagesToolStripMenuItem";
-            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openImagesToolStripMenuItem.Text = "Open";
+            this.openImagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openImagesToolStripMenuItem.Text = "Add";
             this.openImagesToolStripMenuItem.Click += new System.EventHandler(this.openImagesToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem

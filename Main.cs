@@ -39,6 +39,8 @@ namespace batch_image_editor
 
                 lstBox.DataSource = OrderFilesList;
 
+                nudTranslateX.Minimum = int.MinValue;
+                nudTranslateY.Minimum = int.MinValue;
                 nudTranslateX.Maximum = int.MaxValue;
                 nudTranslateY.Maximum = int.MaxValue;
 
