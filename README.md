@@ -3,7 +3,7 @@ A .Net Windows Desktop Application for Cropping, Scaling a batch of images. Expo
 
 Download the latest version here: https://github.com/thobbsinteractive/batch-image-editor/releases/latest
 
-# Release Notes
+## Latests Release Notes
 You can now translate the crop by a set amount of pixels per frame. This is ideal if your subject is not centered in both the start and end frames!
 
 ## Description
