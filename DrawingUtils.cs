@@ -6,6 +6,21 @@ namespace batch_image_editor
 {
     internal static class DrawingUtils
     {
+        public static int Clamp(int value, int min, int max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
+
+        public static Rectangle Translate(Rectangle image, Rectangle crop, int x, int y)
+        {
+            int resX = Clamp(crop.X + x, 0, image.Width - 1);
+            int resY = Clamp(crop.Y + y, 0, image.Height - 1);
+            int resWidth = Clamp(crop.Width, resX, image.Width);
+            int resHeight = Clamp(crop.Height, resY, image.Height);
+
+            return new Rectangle(resX, resY, resWidth, resHeight);
+        }
+
         /// <summary>
         /// Draws a solid rectangle
         /// </summary>

@@ -39,6 +39,11 @@
             this.lblCount = new System.Windows.Forms.Label();
             this.lblCountText = new System.Windows.Forms.Label();
             this.grpCrop = new System.Windows.Forms.GroupBox();
+            this.grpTransform = new System.Windows.Forms.GroupBox();
+            this.nudTranslateY = new System.Windows.Forms.NumericUpDown();
+            this.nudTranslateX = new System.Windows.Forms.NumericUpDown();
+            this.lblTPosX = new System.Windows.Forms.Label();
+            this.lblTPosY = new System.Windows.Forms.Label();
             this.lblRatioCalc = new System.Windows.Forms.Label();
             this.lblRatioText = new System.Windows.Forms.Label();
             this.nudCropHeight = new System.Windows.Forms.NumericUpDown();
@@ -66,6 +71,9 @@
             this.scMain.Panel2.SuspendLayout();
             this.scMain.SuspendLayout();
             this.grpCrop.SuspendLayout();
+            this.grpTransform.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).BeginInit();
@@ -129,7 +137,7 @@
             this.pbMainImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMainImage.Location = new System.Drawing.Point(0, 0);
             this.pbMainImage.Name = "pbMainImage";
-            this.pbMainImage.Size = new System.Drawing.Size(460, 517);
+            this.pbMainImage.Size = new System.Drawing.Size(460, 589);
             this.pbMainImage.TabIndex = 2;
             this.pbMainImage.TabStop = false;
             // 
@@ -152,7 +160,7 @@
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.pbMainImage);
-            this.scMain.Size = new System.Drawing.Size(764, 517);
+            this.scMain.Size = new System.Drawing.Size(764, 589);
             this.scMain.SplitterDistance = 300;
             this.scMain.TabIndex = 3;
             // 
@@ -178,6 +186,7 @@
             // 
             this.grpCrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpCrop.Controls.Add(this.grpTransform);
             this.grpCrop.Controls.Add(this.lblRatioCalc);
             this.grpCrop.Controls.Add(this.lblRatioText);
             this.grpCrop.Controls.Add(this.nudCropHeight);
@@ -190,10 +199,69 @@
             this.grpCrop.Controls.Add(this.lblPosX);
             this.grpCrop.Location = new System.Drawing.Point(10, 190);
             this.grpCrop.Name = "grpCrop";
-            this.grpCrop.Size = new System.Drawing.Size(281, 159);
+            this.grpCrop.Size = new System.Drawing.Size(281, 257);
             this.grpCrop.TabIndex = 1;
             this.grpCrop.TabStop = false;
             this.grpCrop.Text = "Crop";
+            // 
+            // grpTransform
+            // 
+            this.grpTransform.Controls.Add(this.nudTranslateY);
+            this.grpTransform.Controls.Add(this.nudTranslateX);
+            this.grpTransform.Controls.Add(this.lblTPosX);
+            this.grpTransform.Controls.Add(this.lblTPosY);
+            this.grpTransform.Location = new System.Drawing.Point(6, 168);
+            this.grpTransform.Name = "grpTransform";
+            this.grpTransform.Size = new System.Drawing.Size(269, 83);
+            this.grpTransform.TabIndex = 2;
+            this.grpTransform.TabStop = false;
+            this.grpTransform.Text = "Transform per frame (px)";
+            // 
+            // nudTranslateY
+            // 
+            this.nudTranslateY.Location = new System.Drawing.Point(61, 52);
+            this.nudTranslateY.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudTranslateY.Name = "nudTranslateY";
+            this.nudTranslateY.Size = new System.Drawing.Size(120, 20);
+            this.nudTranslateY.TabIndex = 10;
+            this.nudTranslateY.ValueChanged += new System.EventHandler(this.nudTranslateY_ValueChanged);
+            // 
+            // nudTranslateX
+            // 
+            this.nudTranslateX.Location = new System.Drawing.Point(61, 19);
+            this.nudTranslateX.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudTranslateX.Name = "nudTranslateX";
+            this.nudTranslateX.Size = new System.Drawing.Size(120, 20);
+            this.nudTranslateX.TabIndex = 9;
+            this.nudTranslateX.ValueChanged += new System.EventHandler(this.nudTranslateX_ValueChanged);
+            // 
+            // lblTPosX
+            // 
+            this.lblTPosX.AutoSize = true;
+            this.lblTPosX.Location = new System.Drawing.Point(13, 21);
+            this.lblTPosX.Margin = new System.Windows.Forms.Padding(10);
+            this.lblTPosX.Name = "lblTPosX";
+            this.lblTPosX.Size = new System.Drawing.Size(35, 13);
+            this.lblTPosX.TabIndex = 8;
+            this.lblTPosX.Text = "Pos X";
+            // 
+            // lblTPosY
+            // 
+            this.lblTPosY.AutoSize = true;
+            this.lblTPosY.Location = new System.Drawing.Point(13, 54);
+            this.lblTPosY.Margin = new System.Windows.Forms.Padding(10);
+            this.lblTPosY.Name = "lblTPosY";
+            this.lblTPosY.Size = new System.Drawing.Size(35, 13);
+            this.lblTPosY.TabIndex = 7;
+            this.lblTPosY.Text = "Pos Y";
             // 
             // lblRatioCalc
             // 
@@ -337,10 +405,10 @@
             this.grpScale.Controls.Add(this.lblHeight);
             this.grpScale.Controls.Add(this.nudWidth);
             this.grpScale.Controls.Add(this.lblWidth);
-            this.grpScale.Location = new System.Drawing.Point(10, 355);
+            this.grpScale.Location = new System.Drawing.Point(10, 453);
             this.grpScale.Name = "grpScale";
             this.grpScale.Size = new System.Drawing.Size(281, 119);
-            this.grpScale.TabIndex = 2;
+            this.grpScale.TabIndex = 3;
             this.grpScale.TabStop = false;
             this.grpScale.Text = "Size to scale after Crop (px)";
             // 
@@ -430,7 +498,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(784, 633);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.menuStrip2);
             this.MinimumSize = new System.Drawing.Size(800, 600);
@@ -448,6 +516,10 @@
             this.scMain.ResumeLayout(false);
             this.grpCrop.ResumeLayout(false);
             this.grpCrop.PerformLayout();
+            this.grpTransform.ResumeLayout(false);
+            this.grpTransform.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTranslateX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).EndInit();
@@ -494,6 +566,11 @@
         private System.Windows.Forms.ComboBox cboPresets;
         private System.Windows.Forms.Label lblRatioCalcScale;
         private System.Windows.Forms.Label lblRatioScaleText;
+        private System.Windows.Forms.GroupBox grpTransform;
+        private System.Windows.Forms.NumericUpDown nudTranslateY;
+        private System.Windows.Forms.NumericUpDown nudTranslateX;
+        private System.Windows.Forms.Label lblTPosX;
+        private System.Windows.Forms.Label lblTPosY;
     }
 }
 

@@ -16,7 +16,7 @@ namespace batch_image_editor
         private string[] _imagesPaths;
         private string _extension = ".jpg";
 
-        public FrmSequenceExport(string[] imagesPaths, int imageWidth, int imageHeight, Rectangle cropRectangle)
+        public FrmSequenceExport(string[] imagesPaths, int imageWidth, int imageHeight, Rectangle cropRectangle, int transformX, int transformY)
         {
             InitializeComponent();
 

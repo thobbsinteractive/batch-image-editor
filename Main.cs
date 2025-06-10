@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,7 +13,7 @@ namespace batch_image_editor
         private Image _selectedImage = null;
         private Image _renderImage = null;
 
-        public List<string> OrderFilesList => _selectedFilesList.OrderBy(fileStr => Path.GetFileName(fileStr)).ToList();
+        public List<string> OrderFilesList => _selectedFilesList.ToList();
 
         public Main()
         {
@@ -28,12 +27,20 @@ namespace batch_image_editor
 
         private void openImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _selectedFilesList = SelectFiles();
-            if (_selectedFilesList.Any())
+            var files = SelectFiles();
+
+            if (files.Any())
             {
+                foreach (var file in files)
+                {
+                    if (!_selectedFilesList.Contains(file)) 
+                        _selectedFilesList.Add(file);
+                }
+
                 lstBox.DataSource = OrderFilesList;
 
-                lblCount.Text = (OrderFilesList?.Count() ?? 0).ToString();
+                nudTranslateX.Maximum = int.MaxValue;
+                nudTranslateY.Maximum = int.MaxValue;
 
                 nudWidth.Maximum = _selectedImage.Width;
                 nudHeight.Maximum = _selectedImage.Height;
@@ -52,6 +59,7 @@ namespace batch_image_editor
 
                 RefreshCrop();
             }
+            lblCount.Text = (OrderFilesList?.Count() ?? 0).ToString();
         }
 
         private List<string> SelectFiles()
@@ -162,8 +170,16 @@ namespace batch_image_editor
             var blankRect = new Rectangle(0, 0, _selectedImage.Width, _selectedImage.Height);
             DrawingUtils.DrawRectangle(_renderImage, Color.Black, blankRect);
 
-            var rect = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
-            DrawingUtils.DrawImage(_selectedImage, _renderImage, rect, rect);
+            var crop = new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value);
+
+            int translateX = 0;
+            int translateY = 0;
+
+            translateX = lstBox.SelectedIndex * (int)nudTranslateX.Value;
+            translateY = lstBox.SelectedIndex * (int)nudTranslateY.Value;
+            crop = DrawingUtils.Translate(blankRect, crop, translateX, translateY);
+
+            DrawingUtils.DrawImage(_selectedImage, _renderImage, crop, crop);
 
             decimal ratio = CalculateRatioCrop();
             lblRatioCalc.Text = Math.Round(ratio, 2).ToString();
@@ -233,7 +249,13 @@ namespace batch_image_editor
                 FrmQuiltExport frmQuiltExport = new FrmQuiltExport(OrderFilesList.ToArray(),
                     (int)nudWidth.Value,
                     (int)nudHeight.Value,
-                    new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
+                    new Rectangle(
+                        (int)nudCropXPos.Value, 
+                        (int)nudCropYPos.Value, 
+                        (int)nudCropWidth.Value, 
+                        (int)nudCropHeight.Value), 
+                    (int)nudTranslateX.Value, 
+                    (int)nudTranslateY.Value);
                 frmQuiltExport.ShowDialog();
             }
         }
@@ -245,7 +267,13 @@ namespace batch_image_editor
                 FrmSequenceExport frmQuiltExport = new FrmSequenceExport(OrderFilesList.ToArray(),
                     (int)nudWidth.Value,
                     (int)nudHeight.Value,
-                    new Rectangle((int)nudCropXPos.Value, (int)nudCropYPos.Value, (int)nudCropWidth.Value, (int)nudCropHeight.Value));
+                    new Rectangle(
+                        (int)nudCropXPos.Value, 
+                        (int)nudCropYPos.Value, 
+                        (int)nudCropWidth.Value, 
+                        (int)nudCropHeight.Value),
+                    (int)nudTranslateX.Value,
+                    (int)nudTranslateY.Value);
                 frmQuiltExport.ShowDialog();
             }
         }
@@ -268,6 +296,16 @@ namespace batch_image_editor
                     lblRatioCalcScale.Text = Math.Round(ratioScale, 2).ToString();
                 }
             }
+        }
+
+        private void nudTranslateX_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshCrop();
+        }
+
+        private void nudTranslateY_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshCrop();
         }
     }
 }

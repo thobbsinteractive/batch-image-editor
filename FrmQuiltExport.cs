@@ -16,7 +16,7 @@ namespace batch_image_editor
         private string[] _imagesPaths;
         private string _extension = ".jpg";
 
-        public FrmQuiltExport(string[] imagesPaths, int cellWidth, int cellHeight, Rectangle cropRectangle)
+        public FrmQuiltExport(string[] imagesPaths, int cellWidth, int cellHeight, Rectangle cropRectangle, int translateX, int translateY)
         {
             InitializeComponent();
 
