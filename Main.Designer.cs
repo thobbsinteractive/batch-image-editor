@@ -39,6 +39,7 @@ namespace batch_image_editor
             this.asQuiltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbMainImage = new System.Windows.Forms.PictureBox();
             this.scMain = new System.Windows.Forms.SplitContainer();
+            this.btnClear = new System.Windows.Forms.Button();
             this.lblCount = new System.Windows.Forms.Label();
             this.lblCountText = new System.Windows.Forms.Label();
             this.grpCrop = new System.Windows.Forms.GroupBox();
@@ -70,8 +71,10 @@ namespace batch_image_editor
             this.lblHeight = new System.Windows.Forms.Label();
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
+            this.sptPicture = new System.Windows.Forms.SplitContainer();
+            this.grpDisplayOptions = new System.Windows.Forms.GroupBox();
+            this.chkShowMiddle = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btnClear = new System.Windows.Forms.Button();
             this.mnuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -90,6 +93,11 @@ namespace batch_image_editor
             this.grpScale.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sptPicture)).BeginInit();
+            this.sptPicture.Panel1.SuspendLayout();
+            this.sptPicture.Panel2.SuspendLayout();
+            this.sptPicture.SuspendLayout();
+            this.grpDisplayOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuStripMain
@@ -146,7 +154,7 @@ namespace batch_image_editor
             this.pbMainImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMainImage.Location = new System.Drawing.Point(0, 0);
             this.pbMainImage.Name = "pbMainImage";
-            this.pbMainImage.Size = new System.Drawing.Size(460, 589);
+            this.pbMainImage.Size = new System.Drawing.Size(460, 530);
             this.pbMainImage.TabIndex = 2;
             this.pbMainImage.TabStop = false;
             // 
@@ -169,10 +177,20 @@ namespace batch_image_editor
             // 
             // scMain.Panel2
             // 
-            this.scMain.Panel2.Controls.Add(this.pbMainImage);
+            this.scMain.Panel2.Controls.Add(this.sptPicture);
             this.scMain.Size = new System.Drawing.Size(764, 589);
             this.scMain.SplitterDistance = 300;
             this.scMain.TabIndex = 3;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(203, 161);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(88, 24);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // lblCount
             // 
@@ -535,15 +553,48 @@ namespace batch_image_editor
             this.lblWidth.TabIndex = 0;
             this.lblWidth.Text = "Width";
             // 
-            // btnClear
+            // sptPicture
             // 
-            this.btnClear.Location = new System.Drawing.Point(203, 161);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(88, 24);
-            this.btnClear.TabIndex = 4;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.sptPicture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sptPicture.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.sptPicture.IsSplitterFixed = true;
+            this.sptPicture.Location = new System.Drawing.Point(0, 0);
+            this.sptPicture.Name = "sptPicture";
+            this.sptPicture.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // sptPicture.Panel1
+            // 
+            this.sptPicture.Panel1.Controls.Add(this.grpDisplayOptions);
+            this.sptPicture.Panel1MinSize = 55;
+            // 
+            // sptPicture.Panel2
+            // 
+            this.sptPicture.Panel2.Controls.Add(this.pbMainImage);
+            this.sptPicture.Size = new System.Drawing.Size(460, 589);
+            this.sptPicture.SplitterDistance = 55;
+            this.sptPicture.TabIndex = 4;
+            // 
+            // grpDisplayOptions
+            // 
+            this.grpDisplayOptions.Controls.Add(this.chkShowMiddle);
+            this.grpDisplayOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpDisplayOptions.Location = new System.Drawing.Point(0, 0);
+            this.grpDisplayOptions.Name = "grpDisplayOptions";
+            this.grpDisplayOptions.Size = new System.Drawing.Size(460, 55);
+            this.grpDisplayOptions.TabIndex = 3;
+            this.grpDisplayOptions.TabStop = false;
+            this.grpDisplayOptions.Text = "Display Options";
+            // 
+            // chkShowMiddle
+            // 
+            this.chkShowMiddle.AutoSize = true;
+            this.chkShowMiddle.Location = new System.Drawing.Point(6, 19);
+            this.chkShowMiddle.Name = "chkShowMiddle";
+            this.chkShowMiddle.Size = new System.Drawing.Size(110, 17);
+            this.chkShowMiddle.TabIndex = 0;
+            this.chkShowMiddle.Text = "Show center lines";
+            this.chkShowMiddle.UseVisualStyleBackColor = true;
+            this.chkShowMiddle.CheckedChanged += new System.EventHandler(this.chkShowMiddle_CheckedChanged);
             // 
             // Main
             // 
@@ -552,7 +603,7 @@ namespace batch_image_editor
             this.ClientSize = new System.Drawing.Size(784, 633);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.mnuStripMain);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(800, 672);
             this.Name = "Main";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -580,6 +631,12 @@ namespace batch_image_editor
             this.grpScale.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
+            this.sptPicture.Panel1.ResumeLayout(false);
+            this.sptPicture.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sptPicture)).EndInit();
+            this.sptPicture.ResumeLayout(false);
+            this.grpDisplayOptions.ResumeLayout(false);
+            this.grpDisplayOptions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -628,6 +685,9 @@ namespace batch_image_editor
         private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveDown;
         private System.Windows.Forms.ToolStripMenuItem mnuButtonRemove;
         private Button btnClear;
+        private GroupBox grpDisplayOptions;
+        private SplitContainer sptPicture;
+        private CheckBox chkShowMiddle;
     }
 }
 

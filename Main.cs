@@ -243,6 +243,9 @@ namespace batch_image_editor
 
             DrawingUtils.DrawImage(_selectedImage, _renderImage, crop, crop);
 
+            if (chkShowMiddle.Checked)
+                DrawingUtils.DrawCenterLines(_renderImage, crop, Color.Red);
+
             decimal ratio = CalculateRatioCrop();
             lblRatioCalc.Text = Math.Round(ratio, 2).ToString();
 
@@ -417,6 +420,11 @@ namespace batch_image_editor
         {
             _selectedFilesList.Clear();
             RefreshList();
+        }
+
+        private void chkShowMiddle_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshCrop();
         }
     }
 }
