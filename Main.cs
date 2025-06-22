@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace batch_image_editor
         private List<string> _selectedFilesList = new List<string>();
         private Image _selectedImage = null;
         private Image _renderImage = null;
+        private string _defaultFileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
         public List<string> OrderFilesList => _selectedFilesList.ToList();
 
@@ -154,7 +156,7 @@ namespace batch_image_editor
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                openFileDialog.InitialDirectory = _defaultFileLocation;
                 openFileDialog.Filter = GetFileTypes();
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -163,6 +165,7 @@ namespace batch_image_editor
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
+                    _defaultFileLocation = Path.GetDirectoryName(openFileDialog.FileName);
                     return openFileDialog.FileNames.ToList();
                 }
             }
@@ -286,36 +289,28 @@ namespace batch_image_editor
         private void nudXPos_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
-            nudWidth.Value = nudCropWidth.Value;
-            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void nudYPos_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
-            nudWidth.Value = nudCropWidth.Value;
-            nudHeight.Value = nudCropHeight.Value;
         }
 
         private void nudCropWidth_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
-            nudWidth.Value = nudCropWidth.Value;
-            nudHeight.Value = nudCropHeight.Value;
             cboPresets.SelectedIndex = 0;
         }
 
         private void nudCropHeight_ValueChanged(object sender, EventArgs e)
         {
             RefreshCrop();
-            nudWidth.Value = nudCropWidth.Value;
-            nudHeight.Value = nudCropHeight.Value;
             cboPresets.SelectedIndex = 0;
         }
 
         private void asQuiltToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (OrderFilesList.Any())
+            if (OrderFilesList.Any() && ValidateRatios())
             {
                 FrmQuiltExport frmQuiltExport = new FrmQuiltExport(OrderFilesList.ToArray(),
                     (int)nudWidth.Value,
@@ -333,7 +328,7 @@ namespace batch_image_editor
 
         private void asImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (OrderFilesList.Any())
+            if (OrderFilesList.Any() && ValidateRatios())
             {
                 FrmSequenceExport frmQuiltExport = new FrmSequenceExport(OrderFilesList.ToArray(),
                     (int)nudWidth.Value,
@@ -347,6 +342,22 @@ namespace batch_image_editor
                     (int)nudTranslateY.Value);
                 frmQuiltExport.ShowDialog();
             }
+        }
+
+        private bool ValidateRatios()
+        {
+            decimal ratio = CalculateRatioCrop();
+
+            decimal ratioScale = CalculateRatioScale();
+
+            if (Math.Round(ratioScale, 2) == Math.Round(ratio, 2))
+                return true;
+
+            var result = MessageBox.Show("The Ratios of the image and scaling does not match. This will lead to distortion. Do you want to continue?", "Ratios do not match!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                return true;
+            
+            return false;
         }
 
         private void cboPresets_SelectedIndexChanged(object sender, EventArgs e)
