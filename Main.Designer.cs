@@ -58,6 +58,10 @@ namespace batch_image_editor
             this.lblPosY = new System.Windows.Forms.Label();
             this.lblPosX = new System.Windows.Forms.Label();
             this.lstBox = new System.Windows.Forms.ListBox();
+            this.lstContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuButtonMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuButtonRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.grpScale = new System.Windows.Forms.GroupBox();
             this.lblRatioCalcScale = new System.Windows.Forms.Label();
             this.lblRatioScaleText = new System.Windows.Forms.Label();
@@ -67,10 +71,7 @@ namespace batch_image_editor
             this.nudWidth = new System.Windows.Forms.NumericUpDown();
             this.lblWidth = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lstContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnuButtonMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuButtonMoveDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuButtonRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnClear = new System.Windows.Forms.Button();
             this.mnuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
@@ -85,10 +86,10 @@ namespace batch_image_editor
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).BeginInit();
+            this.lstContextMenu.SuspendLayout();
             this.grpScale.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
-            this.lstContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuStripMain
@@ -158,6 +159,7 @@ namespace batch_image_editor
             // 
             // scMain.Panel1
             // 
+            this.scMain.Panel1.Controls.Add(this.btnClear);
             this.scMain.Panel1.Controls.Add(this.lblCount);
             this.scMain.Panel1.Controls.Add(this.lblCountText);
             this.scMain.Panel1.Controls.Add(this.grpCrop);
@@ -403,6 +405,36 @@ namespace batch_image_editor
             this.lstBox.TabIndex = 0;
             this.lstBox.SelectedIndexChanged += new System.EventHandler(this.lstBox_SelectedIndexChanged);
             // 
+            // lstContextMenu
+            // 
+            this.lstContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuButtonMoveUp,
+            this.mnuButtonMoveDown,
+            this.mnuButtonRemove});
+            this.lstContextMenu.Name = "contextMenuStrip1";
+            this.lstContextMenu.Size = new System.Drawing.Size(139, 70);
+            // 
+            // mnuButtonMoveUp
+            // 
+            this.mnuButtonMoveUp.Name = "mnuButtonMoveUp";
+            this.mnuButtonMoveUp.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveUp.Text = "Move Up";
+            this.mnuButtonMoveUp.Click += new System.EventHandler(this.mnuButtonMoveUp_Click);
+            // 
+            // mnuButtonMoveDown
+            // 
+            this.mnuButtonMoveDown.Name = "mnuButtonMoveDown";
+            this.mnuButtonMoveDown.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonMoveDown.Text = "Move Down";
+            this.mnuButtonMoveDown.Click += new System.EventHandler(this.mnuButtonMoveDown_Click);
+            // 
+            // mnuButtonRemove
+            // 
+            this.mnuButtonRemove.Name = "mnuButtonRemove";
+            this.mnuButtonRemove.Size = new System.Drawing.Size(138, 22);
+            this.mnuButtonRemove.Text = "Remove";
+            this.mnuButtonRemove.Click += new System.EventHandler(this.mnuButtonRemove_Click);
+            // 
             // grpScale
             // 
             this.grpScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -503,35 +535,15 @@ namespace batch_image_editor
             this.lblWidth.TabIndex = 0;
             this.lblWidth.Text = "Width";
             // 
-            // lstContextMenu
+            // btnClear
             // 
-            this.lstContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuButtonMoveUp,
-            this.mnuButtonMoveDown,
-            this.mnuButtonRemove});
-            this.lstContextMenu.Name = "contextMenuStrip1";
-            this.lstContextMenu.Size = new System.Drawing.Size(139, 70);
-            // 
-            // mnuButtonMoveUp
-            // 
-            this.mnuButtonMoveUp.Name = "mnuButtonMoveUp";
-            this.mnuButtonMoveUp.Size = new System.Drawing.Size(138, 22);
-            this.mnuButtonMoveUp.Text = "Move Up";
-            this.mnuButtonMoveUp.Click += new System.EventHandler(this.mnuButtonMoveUp_Click);
-            // 
-            // mnuButtonMoveDown
-            // 
-            this.mnuButtonMoveDown.Name = "mnuButtonMoveDown";
-            this.mnuButtonMoveDown.Size = new System.Drawing.Size(138, 22);
-            this.mnuButtonMoveDown.Text = "Move Down";
-            this.mnuButtonMoveDown.Click += new System.EventHandler(this.mnuButtonMoveDown_Click);
-            // 
-            // mnuButtonRemove
-            // 
-            this.mnuButtonRemove.Name = "mnuButtonRemove";
-            this.mnuButtonRemove.Size = new System.Drawing.Size(138, 22);
-            this.mnuButtonRemove.Text = "Remove";
-            this.mnuButtonRemove.Click += new System.EventHandler(this.mnuButtonRemove_Click);
+            this.btnClear.Location = new System.Drawing.Point(203, 161);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(88, 24);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // Main
             // 
@@ -563,11 +575,11 @@ namespace batch_image_editor
             ((System.ComponentModel.ISupportInitialize)(this.nudCropYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropXPos)).EndInit();
+            this.lstContextMenu.ResumeLayout(false);
             this.grpScale.ResumeLayout(false);
             this.grpScale.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).EndInit();
-            this.lstContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -615,6 +627,7 @@ namespace batch_image_editor
         private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveUp;
         private System.Windows.Forms.ToolStripMenuItem mnuButtonMoveDown;
         private System.Windows.Forms.ToolStripMenuItem mnuButtonRemove;
+        private Button btnClear;
     }
 }
 

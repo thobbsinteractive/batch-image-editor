@@ -61,6 +61,7 @@ namespace batch_image_editor
 
         private void RefreshList()
         {
+            lblCount.Text = (OrderFilesList?.Count() ?? 0).ToString();
             if (_selectedFilesList.Count > 0)
             {
                 lstBox.DataSource = OrderFilesList;
@@ -410,6 +411,12 @@ namespace batch_image_editor
                 _selectedFilesList.RemoveAt(lstBox.SelectedIndex);
                 RefreshList();
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            _selectedFilesList.Clear();
+            RefreshList();
         }
     }
 }
