@@ -78,6 +78,19 @@ namespace batch_image_editor
             }
         }
 
+        public static void DrawCenterLines(Image destImage, Rectangle destRect, Color color)
+        {
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                using (var wrapMode = new ImageAttributes())
+                {
+                    Pen pen = new Pen(color, 3);
+                    graphics.DrawLine(pen, destRect.X + (destRect.Width / 2), destRect.Y, destRect.X + (destRect.Width / 2), destRect.Y + destRect.Height);
+                    graphics.DrawLine(pen, destRect.X, destRect.Y + (destRect.Height / 2), destRect.X + destRect.Width, destRect.Y + (destRect.Height / 2));
+                }
+            }
+        }
+
         /// <summary>
         /// Draws the source image to the specified destination image using the rectangle
         /// </summary>
